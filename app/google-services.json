@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "97769310839",
+    "project_id": "bulkesfet-e8382",
+    "storage_bucket": "bulkesfet-e8382.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:97769310839:android:1984752ba69ae50f1dd472",
+        "android_client_info": {
+          "package_name": "com.example.bulkesfet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "97769310839-f9en8dnu3s7dr06qpok87r8kf24tv2bp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.bulkesfet",
+            "certificate_hash": "8102cadc958e5bb9f9d5409d08337e490d52c809"
+          }
+        },
+        {
+          "client_id": "97769310839-96hkn1cv1j6egmclj6li609l6jvpsn6j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyALMKq32zX_W1D86LwnmPTGv6IxIqS17Vo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "97769310839-96hkn1cv1j6egmclj6li609l6jvpsn6j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
