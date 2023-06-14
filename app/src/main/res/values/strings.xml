@@ -63,5 +63,9 @@
     <string name="sendMail">Gönder</string>
     <string name="checkMail">Lütfen posta kutunuzu kontrol ediniz.</string>
 
+    <!---   favorite fragment strings     -->
+    <string name="haveNotFav">Kitaplığa herhangi bir yer eklemediniz.</string>
+
+
 
 </resources>

@@ -3,6 +3,7 @@ package com.example.bulkesfet.view
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.TextView
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI.setupWithNavController
@@ -21,6 +22,7 @@ class MainActivity : AppCompatActivity(), MainListener {
         bottomMenu= findViewById(R.id.bottomNavigationMenu)
         bottomMenu.itemIconTintList = null
         setupWithNavController(bottomMenu,navController)
+
     }
 
     override fun showOrHide(value: Boolean) {

@@ -2,6 +2,7 @@ package com.example.bulkesfet.view.app
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.text.method.ScrollingMovementMethod
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -15,12 +16,20 @@ import com.example.bulkesfet.databinding.FragmentOnePlaceBinding
 import com.example.bulkesfet.utils.getImage
 import com.example.bulkesfet.utils.progressDrawable
 import com.example.bulkesfet.viewModel.OnePlaceViewModel
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 
 class OnePlaceFragment : Fragment() {
     private var _binding: FragmentOnePlaceBinding? = null
     private val binding get()=_binding!!
     private lateinit var viewModel: OnePlaceViewModel
+    private lateinit var mID:String
+
+    private val firebaseDatabase = FirebaseDatabase.getInstance().reference
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,7 +38,7 @@ class OnePlaceFragment : Fragment() {
         _binding= FragmentOnePlaceBinding.inflate(inflater,container,false)
         viewModel=ViewModelProviders.of(this)[OnePlaceViewModel::class.java]
         arguments?.let {
-            val mID= OnePlaceFragmentArgs.fromBundle(it).mId
+             mID= OnePlaceFragmentArgs.fromBundle(it).mId.toString()
             viewModel.getDatas(mID)
         }
         return binding.root
@@ -43,17 +52,33 @@ class OnePlaceFragment : Fragment() {
 
     private fun initializeUI(view: View) {
         val favBtn=binding.bookmarkCheck
-
+        checkFav(mID)
         binding.btnBack.setOnClickListener {
             activity?.onBackPressed()
         }
+        binding.placeDescription.movementMethod = ScrollingMovementMethod()
         if (viewModel.getUser()){
-            //TODO Kullanıcı girişi var ise burada da favori kontrolü yap
+
+
             favBtn.setOnCheckedChangeListener { _, isChecked ->
-                if (isChecked)
+                if (isChecked){
                     favBtn.setButtonDrawable(R.drawable.ic_removebookmark)
-                else
+                    firebaseDatabase
+                        .child("Users")
+                        .child((FirebaseAuth.getInstance().currentUser?.uid).toString())
+                        .child("Favorites")
+                        .child(mID)
+                        .setValue(mID)
+
+                } else {
                     favBtn.setButtonDrawable(R.drawable.ic_addbookmark)
+                    firebaseDatabase
+                        .child("Users")
+                        .child((FirebaseAuth.getInstance().currentUser?.uid).toString())
+                        .child("Favorites")
+                        .child(mID)
+                        .removeValue()
+                }
             }
         }else{
             favBtn.setButtonDrawable(R.drawable.bookmark)
@@ -87,7 +112,6 @@ class OnePlaceFragment : Fragment() {
         })
         viewModel.placeDetails.observe(viewLifecycleOwner, Observer { details ->
             details?.let {
-                Log.e("UYGULAMA","Detaylar burada"+ it.placeName)
                 binding.placeNameText.text=it.placeName
                 binding.placeDescription.text=it.description
                 binding.placePrice.text=it.price
@@ -104,6 +128,26 @@ class OnePlaceFragment : Fragment() {
         else
             binding.mainConstraint.visibility=View.VISIBLE
 
+    }
+
+    private fun checkFav(id: String) {
+        binding.bookmarkCheck.isChecked=false
+        val query = firebaseDatabase.child("Users")
+            .child((FirebaseAuth.getInstance().currentUser?.uid).toString())
+            .child("Favorites")
+            .orderByKey()
+        query.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (singleSnapshot in snapshot.children){
+                    if (singleSnapshot.value==id)
+                        binding.bookmarkCheck.isChecked = true
+                }
+
+
+            }
+            override fun onCancelled(error: DatabaseError) {
+            }
+        })
     }
 
 

@@ -14,10 +14,9 @@ class OnePlaceViewModel : ViewModel() {
     val placeDetails = MutableLiveData<PlaceModel>()
     val error = MutableLiveData<String>()
 
-    fun getDatas(mID: Int) {
+    fun getDatas(mID: String) {
         loading.value = true
-        val placeID = mID.toString()
-        val query = FirebaseDatabase.getInstance().reference.child("Places").child(placeID)
+        val query = FirebaseDatabase.getInstance().reference.child("Places").child(mID)
             .orderByKey()
         query.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -34,7 +33,7 @@ class OnePlaceViewModel : ViewModel() {
                     )
                 }
                 val place = PlaceModel(
-                    mID.toString(),
+                    mID,
                     placeName,
                     placeCategory,
                     placeDescription,

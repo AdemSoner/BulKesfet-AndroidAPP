@@ -3,6 +3,7 @@ package com.example.bulkesfet.service
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.DialogInterface
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +17,10 @@ import com.example.bulkesfet.utils.progressDrawable
 import com.example.bulkesfet.view.app.SearchFragmentArgs
 import com.example.bulkesfet.view.app.SearchFragmentDirections
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 /*
 Adapter çalıştığında buraya placeList gelmekte. İçeriği placeList dizisidir.
@@ -38,21 +42,53 @@ class PlaceAdapter(private val placeList: ArrayList<PlaceModel>) :
         private val favBtn = binding.favCheck
         private val favLogin = binding.loginBTN
 
+        private fun checkFav(id: String) {
+            favBtn.isChecked=false
+            val query = firebaseDatabase.child("Users")
+                .child((FirebaseAuth.getInstance().currentUser?.uid).toString())
+                .child("Favorites")
+                .orderByKey()
+            query.addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    for (singleSnapshot in snapshot.children){
+                        if (singleSnapshot.value==id)
+                            favBtn.isChecked = true
+                    }
+
+
+                }
+                override fun onCancelled(error: DatabaseError) {
+                }
+            })
+        }
 
         fun setData(placeDetail: PlaceModel) {
+            checkFav(placeDetail.id)
             placeName.text = placeDetail.placeName
             placeDescription.text=setText100(placeDetail.description)
             placeImage.getImage(placeDetail.images[0], progressDrawable(view.context))
             if (firebaseAuth.currentUser!=null){
                 favBtn.visibility=View.VISIBLE
                 favLogin.visibility=View.GONE
-                //TODO Favoriye alındığında burada işlem yaptır. Aşağıda örnek kod var
                 favBtn.setOnCheckedChangeListener { _, isChecked ->
-                    if (isChecked)
+                    if (isChecked){
                         favBtn.setButtonDrawable(R.drawable.ic_removebookmark)
-                    else
-                        favBtn.setButtonDrawable(R.drawable.ic_addbookmark)
+                        firebaseDatabase
+                            .child("Users")
+                            .child((FirebaseAuth.getInstance().currentUser?.uid).toString())
+                            .child("Favorites")
+                            .child(placeDetail.id)
+                            .setValue(placeDetail.id)
 
+                    } else {
+                        favBtn.setButtonDrawable(R.drawable.ic_addbookmark)
+                        firebaseDatabase
+                            .child("Users")
+                            .child((FirebaseAuth.getInstance().currentUser?.uid).toString())
+                            .child("Favorites")
+                            .child(placeDetail.id)
+                            .removeValue()
+                    }
                 }
             }else{
                 binding.loginBTN.setOnClickListener {
@@ -70,6 +106,7 @@ class PlaceAdapter(private val placeList: ArrayList<PlaceModel>) :
 
         }
     }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlaceViewHolder {
         val binding =
@@ -120,69 +157,3 @@ class PlaceAdapter(private val placeList: ArrayList<PlaceModel>) :
     }
 
 }
-
-
-/*
-
-
-
-inner class FoodViewHolder(var view:View): RecyclerView.ViewHolder(view) {
-    var foodName=view.foodNameText
-    var foodImage = view.imgFood
-    var favBtn = view.favCheck
-    fun setData(createFoodLineNow: MealData.Results, position: Int) {
-        checkFav(createFoodLineNow)
-        foodName.text= createFoodLineNow.resultName
-        foodImage.getImage(createFoodLineNow.image!!, progressDrawable(view.context))
-
-        favBtn.setOnClickListener {
-            if (favBtn.isChecked) {
-                val itemId=createFoodLineNow.mId.toString()
-                val itemName=createFoodLineNow.resultName.toString()
-                val itemImage=createFoodLineNow.image.toString()
-                val itemContent=createFoodLineNow.content.toString()
-                val newFavoriteItem = FavoritesItem(itemId,itemName,itemImage,itemContent)
-                database
-                    .child("Users")
-                    .child((FirebaseAuth.getInstance().currentUser?.uid).toString())
-                    .child("Favorites")
-                    .child(foodName.text.toString())
-                    .setValue(newFavoriteItem)
-
-            } else {
-                database
-                    .child("Users")
-                    .child((FirebaseAuth.getInstance().currentUser?.uid).toString())
-                    .child("Favorites")
-                    .child(foodName.text.toString())
-                    .removeValue()
-            }
-
-        }
-    }
-
-    private fun checkFav(createFoodLineNow: MealData.Results) {
-        favBtn.isChecked=false
-        val query = database.child("Users")
-            .child((FirebaseAuth.getInstance().currentUser?.uid).toString())
-            .child("Favorites")
-            .orderByKey()
-        query.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                for (singleSnapshot in snapshot.children) {
-                    if (singleSnapshot.child("itemId").value == createFoodLineNow.mId.toString()) {
-                        favBtn.isChecked = true
-                    }
-                }
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-            }
-        })
-    }
-
-}
-
-
-
- */

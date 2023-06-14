@@ -27,6 +27,7 @@ class MainFragment : Fragment() {
         activityListener = activity as MainListener
         activityListener.showOrHide(true)
         viewModel=ViewModelProviders.of(this)[MainViewModel::class.java]
+        //TODO API VERİ ÇEKME İŞLEMİ BURADA
         //viewModel.checkDatabase()
         initializeUI(binding.root)
         return binding.root

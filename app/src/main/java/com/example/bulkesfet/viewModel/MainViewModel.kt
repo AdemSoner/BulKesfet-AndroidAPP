@@ -41,7 +41,6 @@ class MainViewModel : ViewModel() {
                     val placeDescription = response.body()?.get(a)?.description
                     val placeCategory = response.body()?.get(a)?.category
                     val placeAdress = response.body()?.get(a)?.address
-
                     val placePrice = response.body()?.get(a)?.price
                     val placeImages = response.body()?.get(a)?.images
 

@@ -76,7 +76,19 @@
         android:id="@+id/favoritesFragment"
         android:name="com.example.bulkesfet.view.app.FavoritesFragment"
         android:label="fragment_favorites"
-        tools:layout="@layout/fragment_favorites" />
+        tools:layout="@layout/fragment_favorites" >
+        <action
+            android:id="@+id/action_favoritesFragment_to_onePlaceFragment"
+            app:destination="@id/onePlaceFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_in"
+            app:popEnterAnim="@anim/fade_out"
+            app:popExitAnim="@anim/slide_out" />
+        <argument
+            android:name="category"
+            app:argType="string"
+            android:defaultValue="category" />
+    </fragment>
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.example.bulkesfet.view.app.ProfileFragment"

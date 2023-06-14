@@ -1,0 +1,2 @@
+Favoriler kısmı tamamlandı.
+Detay sayfasında textview kaydırma işlemi gerçekleştirildi.

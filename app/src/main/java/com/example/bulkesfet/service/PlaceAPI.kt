@@ -5,10 +5,9 @@ import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.PUT
 
-// BASE URL = bulkesfet/places
 
 interface PlaceAPI {
-    @GET("bulkesfet/place2")
+    @GET("bulkesfet/place")
     fun getPlaceDetails(): Call<List<PlaceModel>>
 
     @GET("bulkesfet/allList?category=flight|hotel|transportation")
