@@ -12,8 +12,11 @@ import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.bulkesfet.R
+import com.example.bulkesfet.adapter.ImageRecyclerAdapter
 import com.example.bulkesfet.databinding.FragmentOnePlaceBinding
+import com.example.bulkesfet.service.ImageClickListener
 import com.example.bulkesfet.utils.getImage
 import com.example.bulkesfet.utils.progressDrawable
 import com.example.bulkesfet.viewModel.OnePlaceViewModel
@@ -25,7 +28,7 @@ import com.google.firebase.database.ValueEventListener
 import kotlin.math.floor
 
 
-class OnePlaceFragment : Fragment() {
+class OnePlaceFragment : Fragment(),ImageClickListener {
     private var _binding: FragmentOnePlaceBinding? = null
     private val binding get()=_binding!!
     private lateinit var viewModel: OnePlaceViewModel
@@ -52,6 +55,7 @@ class OnePlaceFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         observeLiveData(view)
         initializeUI(view)
+        binding.imagesRecyclerView.layoutManager=LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
     }
 
     private fun initializeUI(view: View) {
@@ -128,7 +132,7 @@ class OnePlaceFragment : Fragment() {
                 binding.placePrice.text=it.price
                 binding.placeAddress.text=it.address
                 binding.viewPager.getImage(it.images[0], progressDrawable(requireContext()))
-
+                binding.imagesRecyclerView.adapter=ImageRecyclerAdapter(it.images,this)
             }
         })
         viewModel.rate.observe(viewLifecycleOwner, Observer { rate->
@@ -193,6 +197,14 @@ class OnePlaceFragment : Fragment() {
         val placeImage=placeImages[0]
         val action=OnePlaceFragmentDirections.actionOnePlaceFragmentToPlaceCommentsFragment(mID,placeName,placeImage)
         Navigation.findNavController(it!!).navigate(action)
+    }
+
+    override fun imageClickListener(position: Int) {
+        setImage(position)
+    }
+
+    private fun setImage(position: Int) {
+        binding.viewPager.getImage(viewModel.placeDetails.value!!.images[position], progressDrawable(requireContext()))
     }
 
 }

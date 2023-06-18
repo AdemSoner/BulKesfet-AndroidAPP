@@ -4,3 +4,4 @@ Detay sayfasında textview kaydırma işlemi gerçekleştirildi.
 Yorum yapma eklendi. 
 Yorumları listeleme eklendi.
 Her yerin ortalamasına göre yıldız ayarı yapıldı.
+Detay sayfasında tüm resimleri gösteren recycler view eklendi.
