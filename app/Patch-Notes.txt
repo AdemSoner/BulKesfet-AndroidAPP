@@ -1,2 +1,6 @@
 Favoriler kısmı tamamlandı.
 Detay sayfasında textview kaydırma işlemi gerçekleştirildi.
+------------------------------------------------------------- x4
+Yorum yapma eklendi. 
+Yorumları listeleme eklendi.
+Her yerin ortalamasına göre yıldız ayarı yapıldı.

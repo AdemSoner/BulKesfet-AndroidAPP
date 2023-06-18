@@ -1,4 +1,4 @@
-package com.example.bulkesfet.service
+package com.example.bulkesfet.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager

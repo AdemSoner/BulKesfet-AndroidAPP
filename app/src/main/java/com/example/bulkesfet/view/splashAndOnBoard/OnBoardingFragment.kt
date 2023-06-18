@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import com.example.bulkesfet.view.splashAndOnBoard.screens.FirstScreen
 import com.example.bulkesfet.view.splashAndOnBoard.screens.SecondScreen
 import com.example.bulkesfet.databinding.FragmentOnBoardingBinding
-import com.example.bulkesfet.service.OnBoardAdapter
+import com.example.bulkesfet.adapter.OnBoardAdapter
 
 
 class OnBoardingFragment : Fragment() {

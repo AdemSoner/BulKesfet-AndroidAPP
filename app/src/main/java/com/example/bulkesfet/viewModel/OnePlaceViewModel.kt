@@ -13,10 +13,12 @@ class OnePlaceViewModel : ViewModel() {
     val loading = MutableLiveData<Boolean>()
     val placeDetails = MutableLiveData<PlaceModel>()
     val error = MutableLiveData<String>()
+    val rate= MutableLiveData<ArrayList<String>>()
 
+    val firebaseDatabase=FirebaseDatabase.getInstance().reference
     fun getDatas(mID: String) {
         loading.value = true
-        val query = FirebaseDatabase.getInstance().reference.child("Places").child(mID)
+        val query = firebaseDatabase.child("Places").child(mID)
             .orderByKey()
         query.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -46,12 +48,26 @@ class OnePlaceViewModel : ViewModel() {
             }
 
 
-            override fun onCancelled(error: DatabaseError) {
-                println("Hata Oluştu Database hatası")
+            override fun onCancelled(databaseError: DatabaseError) {
+                error.value=databaseError.message
             }
         })
 
 
+    }
+
+    fun getPlaceRate(placeID: String){
+        val placerate= arrayListOf<Int>()
+        firebaseDatabase.child("Comments").get().addOnSuccessListener {
+            for (snapshot in it.children){
+                if (snapshot.child("placeID").value.toString()==placeID){
+                    placerate.add(snapshot.child("rate").value.toString().toInt())
+                }
+            }
+            if(placerate.isNotEmpty())
+                rate.value= arrayListOf(placerate.average().toString(),placerate.size.toString())
+
+        }
     }
 
     fun getUser():Boolean {

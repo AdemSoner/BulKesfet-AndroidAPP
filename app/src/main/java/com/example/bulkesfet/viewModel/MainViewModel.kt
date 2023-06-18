@@ -2,9 +2,12 @@ package com.example.bulkesfet.viewModel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.bulkesfet.model.Comments
+import com.example.bulkesfet.model.MyDate
 import com.example.bulkesfet.model.PlaceModel
 import com.example.bulkesfet.service.PlaceAPI
 import com.example.bulkesfet.utils.BASE_URL
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import retrofit2.Call
 import retrofit2.Callback
@@ -13,10 +16,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class MainViewModel : ViewModel() {
-    val error= MutableLiveData<String>()
+    val error = MutableLiveData<String>()
     // TODO API VERİ ÇEKME İŞİ BİTTİYSE BU VİEWMODELİ SİLEBİLİRSİN
-
-
 
 
     // API DEN VERİTABANI VERİ KOPYALAMASI

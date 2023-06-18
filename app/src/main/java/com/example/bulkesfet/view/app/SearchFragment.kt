@@ -8,9 +8,8 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.bulkesfet.R
 import com.example.bulkesfet.databinding.FragmentSearchBinding
-import com.example.bulkesfet.service.PlaceAdapter
+import com.example.bulkesfet.adapter.PlaceAdapter
 import com.example.bulkesfet.viewModel.SearchViewModel
 
 class SearchFragment : Fragment() {
@@ -40,12 +39,7 @@ class SearchFragment : Fragment() {
         }
         viewModel.refreshDataFromFirebase(query)
         observeLiveData()
-
-
     }
-
-
-
 
     private fun observeLiveData() {
         viewModel.placeLoading.observe(viewLifecycleOwner, Observer { loading ->
@@ -58,7 +52,6 @@ class SearchFragment : Fragment() {
                     binding.searchProgressBar.visibility = View.GONE
                 }
             }
-
         })
 
         viewModel.placeList.observe(viewLifecycleOwner, Observer { places ->

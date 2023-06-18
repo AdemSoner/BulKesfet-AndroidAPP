@@ -52,8 +52,8 @@
             android:id="@+id/action_mainFragment_to_searchFragment"
             app:destination="@id/searchFragment"
             app:enterAnim="@anim/slide_in"
-            app:exitAnim="@anim/fade_in"
-            app:popEnterAnim="@anim/fade_out"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
             app:popExitAnim="@anim/slide_out" />
     </fragment>
     <fragment
@@ -64,8 +64,8 @@
             android:id="@+id/action_searchFragment_to_onePlaceFragment"
             app:destination="@id/onePlaceFragment"
             app:enterAnim="@anim/slide_in"
-            app:exitAnim="@anim/fade_in"
-            app:popEnterAnim="@anim/fade_out"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
             app:popExitAnim="@anim/slide_out" />
         <argument
             android:name="category"
@@ -81,8 +81,8 @@
             android:id="@+id/action_favoritesFragment_to_onePlaceFragment"
             app:destination="@id/onePlaceFragment"
             app:enterAnim="@anim/slide_in"
-            app:exitAnim="@anim/fade_in"
-            app:popEnterAnim="@anim/fade_out"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
             app:popExitAnim="@anim/slide_out" />
         <argument
             android:name="category"
@@ -98,15 +98,22 @@
             android:id="@+id/action_profileFragment_to_loginFragment"
             app:destination="@id/loginFragment"
             app:enterAnim="@anim/slide_in"
-            app:exitAnim="@anim/fade_in"
-            app:popEnterAnim="@anim/fade_out"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
             app:popExitAnim="@anim/slide_out" />
         <action
             android:id="@+id/action_profileFragment_to_registerFragment"
             app:destination="@id/registerFragment"
             app:enterAnim="@anim/slide_in"
-            app:exitAnim="@anim/fade_in"
-            app:popEnterAnim="@anim/fade_out"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out" />
+        <action
+            android:id="@+id/action_profileFragment_to_userCommentsFragment"
+            app:destination="@id/userCommentsFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
             app:popExitAnim="@anim/slide_out" />
     </fragment>
     <fragment
@@ -118,15 +125,15 @@
             android:id="@+id/action_loginFragment_to_profileFragment"
             app:destination="@id/profileFragment"
             app:enterAnim="@anim/slide_in"
-            app:exitAnim="@anim/fade_in"
-            app:popEnterAnim="@anim/fade_out"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
             app:popExitAnim="@anim/slide_out" />
         <action
             android:id="@+id/action_loginFragment_to_registerFragment"
             app:destination="@id/registerFragment"
             app:enterAnim="@anim/slide_in"
-            app:exitAnim="@anim/fade_in"
-            app:popEnterAnim="@anim/fade_out"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
             app:popExitAnim="@anim/slide_out" />
     </fragment>
     <fragment
@@ -138,15 +145,15 @@
             android:id="@+id/action_registerFragment_to_profileFragment"
             app:destination="@id/profileFragment"
             app:enterAnim="@anim/slide_in"
-            app:exitAnim="@anim/fade_in"
-            app:popEnterAnim="@anim/fade_out"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
             app:popExitAnim="@anim/slide_out" />
         <action
             android:id="@+id/action_registerFragment_to_loginFragment"
             app:destination="@id/loginFragment"
             app:enterAnim="@anim/slide_in"
-            app:exitAnim="@anim/fade_in"
-            app:popEnterAnim="@anim/fade_out"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
             app:popExitAnim="@anim/slide_out" />
     </fragment>
     <fragment
@@ -157,8 +164,8 @@
             android:id="@+id/action_onePlaceFragment_to_searchFragment"
             app:destination="@id/searchFragment"
             app:enterAnim="@anim/slide_in"
-            app:exitAnim="@anim/fade_in"
-            app:popEnterAnim="@anim/fade_out"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
             app:popExitAnim="@anim/slide_out" />
         <argument
             android:name="mId"
@@ -168,8 +175,80 @@
             android:id="@+id/action_oneFoodFragment_to_favoritesFragment"
             app:destination="@id/favoritesFragment"
             app:enterAnim="@anim/slide_in"
-            app:exitAnim="@anim/fade_in"
-            app:popEnterAnim="@anim/fade_out"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
             app:popExitAnim="@anim/slide_out" />
+        <action
+            android:id="@+id/action_onePlaceFragment_to_placeCommentsFragment"
+            app:destination="@id/placeCommentsFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out" />
+        <argument
+            android:name="placeName"
+            app:argType="string"
+            android:defaultValue="null" />
     </fragment>
+    <fragment
+        android:id="@+id/placeCommentsFragment"
+        android:name="com.example.bulkesfet.view.app.PlaceCommentsFragment"
+        android:label="PlaceCommentsFragment" >
+        <argument
+            android:name="placeID"
+            app:argType="string"
+            android:defaultValue="null" />
+        <action
+            android:id="@+id/action_placeCommentsFragment_to_newCommentFragment"
+            app:destination="@id/newCommentFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out" />
+        <argument
+            android:name="placeName"
+            app:argType="string"
+            android:defaultValue="null" />
+        <argument
+            android:name="placeImage"
+            app:argType="string"
+            android:defaultValue="null" />
+    </fragment>
+    <fragment
+        android:id="@+id/userCommentsFragment"
+        android:name="com.example.bulkesfet.view.app.UserCommentsFragment"
+        android:label="UserCommentsFragment" >
+        <argument
+            android:name="userUID"
+            android:defaultValue="null"
+            app:argType="string" />
+    </fragment>
+    <dialog
+        android:id="@+id/newCommentFragment"
+        android:name="com.example.bulkesfet.view.app.NewCommentFragment"
+        android:label="NewCommentFragment" >
+        <argument
+            android:name="placeID"
+            app:argType="string"
+            android:defaultValue="null" />
+        <argument
+            android:name="placeName"
+            app:argType="string"
+            android:defaultValue="null" />
+        <argument
+            android:name="userImage"
+            app:argType="string"
+            android:defaultValue="null" />
+        <argument
+            android:name="userName"
+            app:argType="string"
+            android:defaultValue="null" />
+        <action
+            android:id="@+id/action_newCommentFragment_to_placeCommentsFragment"
+            app:destination="@id/placeCommentsFragment" />
+        <argument
+            android:name="placeImage"
+            app:argType="string"
+            android:defaultValue="null" />
+    </dialog>
 </navigation>

@@ -1,7 +1,6 @@
 package com.example.bulkesfet.view.app
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.bulkesfet.R
 import com.example.bulkesfet.databinding.FragmentFavoritesBinding
 import com.example.bulkesfet.model.PlaceModel
-import com.example.bulkesfet.service.FavAdapter
+import com.example.bulkesfet.adapter.FavAdapter
 import com.example.bulkesfet.viewModel.FavoritesViewModel
 
 
@@ -56,7 +55,8 @@ class FavoritesFragment : Fragment() {
                         binding.errorFav.visibility=View.GONE
                         binding.favGroupTextView.visibility=View.GONE
                     }else{
-                        val string="Favorilerinizde ${viewModel.itemCount.value} tane mekan listelenmiştir"
+                        var string=getString(R.string.favCount)
+                        string= String.format(string,viewModel.itemCount.value)
                         binding.favCountTextView.text=string
                         binding.favGroupTextView.visibility=View.VISIBLE
                         binding.emptyGroupTextView.visibility=View.GONE
@@ -68,8 +68,8 @@ class FavoritesFragment : Fragment() {
             count?.let {
                 if(it>0){
                     binding.emptyFav.visibility=View.GONE
-                    //TODO LAnguage kısmına göre yap loading içerisinde de var aynısı
-                    val string="Favorilerinizde ${viewModel.itemCount.value} tane mekan listelenmiştir"
+                    var string=getString(R.string.favCount)
+                    string= String.format(string, viewModel.itemCount.value)
                     binding.favCountTextView.text=string
                     binding.favCountTextView.visibility=View.VISIBLE
                 }

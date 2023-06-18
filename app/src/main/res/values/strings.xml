@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Bul Keşfet</string>
-    <string name="hidden">************</string>
+    <string name="hidden" translatable="false">************</string>
     <string name="error">Hata</string>
     <string name="ok">Tamam</string>
     <string name="fill"> Lütfen Boş bırakmayınız</string>
     <string name="failed">Hatalı giriş</string>
-    <string name="UIerror">UIstate unhandled:</string>
+    <string name="UIerror" translatable="false">UIstate unhandled:</string>
     <string name="passNotMatch">Şifreleriniz eşleşmiyor</string>
 
     <!-- OnBoard Strings -->
@@ -32,12 +32,17 @@
     <string name="cantFoundFood">Herhangi bir sonuç bulunamadı</string>
     <string name="needLogin">Bu işlem için önce giriş yapmanız gerekmektedir!</string>
     <string name="exit">Çıkış Yap\n</string>
+    <string name="noComments">Yorum yapılmadı</string>
+    <string name="countComment">"%1$s (%2$s değerlendirme)"</string>
 
     <!-- ProfileFragments Strings -->
     <string name="login">Giriş Yap</string>
     <string name="logout">Çıkış yap</string>
     <string name="register">Kayıt Ol</string>
     <string name="newPlaceBTN">Bildiğiniz bir yeri eklemek için tıklayın</string>
+    <string name="yourComments">Yorumlarınız</string>
+    <string name="showComments">Yorumlarımı göster</string>
+    <string name="noCommentsUser">Hiçbir yorumunuz bulunamadı</string>
 
     <!---    loginFragment Strings     -->
     <string name="loginpagewelcomemessage">Bul Keşfet Giriş Ekranı</string>
@@ -65,7 +70,19 @@
 
     <!---   favorite fragment strings     -->
     <string name="haveNotFav">Kitaplığa herhangi bir yer eklemediniz.</string>
+    <string name="favCount">Favorilerinizde %1$s tane mekan listelenmiştir</string>
 
+    <!---   PlaceComment fragment strings     -->
+    <string name="commentCount">"%1$s Adet değerlendirme mevcut"</string>
+    <string name="noCommentFound">"Yorum bulunamadı"</string>
+    <string name="newComment">Buraya gittiniz mi? \nLütfen yorum yaparak sizden sonraki kullanıcıların bilgilenmesini sağlayın.\nYeni yorum yapmak için tıklayabilirsiniz.</string>
+
+    <!---   NewComment DialogFragment strings     -->
+    <string name="sendComment">Yorum yap</string>
+    <string name="infoComment">Puanınızı ve yorumunuzu girip\n<b>Yorum Yap</b> tuşuna basınız</string>
+    <string name="typeComment">Yorumunuzu giriniz.(Opsiyonel)</string>
+    <string name="publishEveryone">Herkese Açık Yayınlanıyor</string>
+    <string name="commentSuccess">Yorum yapma başarılı</string>
 
 
 </resources>

@@ -29,6 +29,7 @@ class MainFragment : Fragment() {
         viewModel=ViewModelProviders.of(this)[MainViewModel::class.java]
         //TODO API VERİ ÇEKME İŞLEMİ BURADA
         //viewModel.checkDatabase()
+        //viewModel.yorumekle()
         initializeUI(binding.root)
         return binding.root
     }

@@ -22,6 +22,9 @@
     <string name="cantFoundFood">Herhangi bir sonuç bulunamadı</string>
     <string name="exit">Çıkış Yap\n</string>
     <string name="loginpagewelcomemessage">Bul Keşfet Giriş Ekranı</string>
+    <string name="yourComments">Yorumlarınız</string>
+    <string name="typeComment">Yorumunuzu giriniz.(Opsiyonel)</string>
+    <string name="publishEveryone">Herkese Açık Yayınlanıyor.</string>
 
 
 </resources>

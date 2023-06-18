@@ -1,12 +1,11 @@
-package com.example.bulkesfet.service
+package com.example.bulkesfet.adapter
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
-import android.content.DialogInterface
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bulkesfet.R
@@ -14,13 +13,13 @@ import com.example.bulkesfet.databinding.OneplacelayoutBinding
 import com.example.bulkesfet.model.PlaceModel
 import com.example.bulkesfet.utils.getImage
 import com.example.bulkesfet.utils.progressDrawable
-import com.example.bulkesfet.view.app.SearchFragmentArgs
 import com.example.bulkesfet.view.app.SearchFragmentDirections
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import kotlin.math.floor
 
 /*
 Adapter çalıştığında buraya placeList gelmekte. İçeriği placeList dizisidir.
@@ -44,6 +43,7 @@ class PlaceAdapter(private val placeList: ArrayList<PlaceModel>) :
 
         private fun checkFav(id: String) {
             favBtn.isChecked=false
+            favBtn.setButtonDrawable(R.drawable.ic_addbookmark)
             val query = firebaseDatabase.child("Users")
                 .child((FirebaseAuth.getInstance().currentUser?.uid).toString())
                 .child("Favorites")
@@ -51,11 +51,11 @@ class PlaceAdapter(private val placeList: ArrayList<PlaceModel>) :
             query.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     for (singleSnapshot in snapshot.children){
-                        if (singleSnapshot.value==id)
+                        if (singleSnapshot.value==id){
                             favBtn.isChecked = true
+                            favBtn.setButtonDrawable(R.drawable.ic_removebookmark)
+                        }
                     }
-
-
                 }
                 override fun onCancelled(error: DatabaseError) {
                 }
@@ -63,6 +63,7 @@ class PlaceAdapter(private val placeList: ArrayList<PlaceModel>) :
         }
 
         fun setData(placeDetail: PlaceModel) {
+            getPlaceRate(placeDetail)
             checkFav(placeDetail.id)
             placeName.text = placeDetail.placeName
             placeDescription.text=setText100(placeDetail.description)
@@ -70,8 +71,8 @@ class PlaceAdapter(private val placeList: ArrayList<PlaceModel>) :
             if (firebaseAuth.currentUser!=null){
                 favBtn.visibility=View.VISIBLE
                 favLogin.visibility=View.GONE
-                favBtn.setOnCheckedChangeListener { _, isChecked ->
-                    if (isChecked){
+                favBtn.setOnClickListener {
+                    if (favBtn.isChecked){
                         favBtn.setButtonDrawable(R.drawable.ic_removebookmark)
                         firebaseDatabase
                             .child("Users")
@@ -79,8 +80,7 @@ class PlaceAdapter(private val placeList: ArrayList<PlaceModel>) :
                             .child("Favorites")
                             .child(placeDetail.id)
                             .setValue(placeDetail.id)
-
-                    } else {
+                    } else{
                         favBtn.setButtonDrawable(R.drawable.ic_addbookmark)
                         firebaseDatabase
                             .child("Users")
@@ -90,7 +90,8 @@ class PlaceAdapter(private val placeList: ArrayList<PlaceModel>) :
                             .removeValue()
                     }
                 }
-            }else{
+            }
+            else{
                 binding.loginBTN.setOnClickListener {
                     val alert= AlertDialog.Builder(view.context)
                     alert.setTitle(R.string.needLogin)
@@ -103,10 +104,51 @@ class PlaceAdapter(private val placeList: ArrayList<PlaceModel>) :
                 favBtn.visibility=View.GONE
                 favLogin.visibility=View.VISIBLE
             }
+        }
+
+        private fun getPlaceRate(placeDetail: PlaceModel) {
+            val placerate= arrayListOf<Int>()
+            firebaseDatabase.child("Comments").get().addOnSuccessListener {
+                for (snapshot in it.children){
+                    if (snapshot.child("placeID").value.toString()==placeDetail.id){
+                        placerate.add(snapshot.child("rate").value.toString().toInt())
+                    }
+                }
+                if(placerate.isNotEmpty()){
+                    binding.placeRateText.setCompoundDrawables(null,null,null,null)
+                    binding.starLayout.visibility=View.VISIBLE
+                    var string=binding.root.context.getString(R.string.countComment)
+                    string= String.format(string,placerate.average().toString(),placerate.size.toString())
+                    binding.placeRateText.text=string
+                    setStars(placerate.average())
+                    placerate.clear()
+                }else{
+                    binding.placeRateText.setText(R.string.noCommentFound)
+                    binding.starLayout.visibility=View.GONE
+                    binding.placeRateText.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_starborder, 0, 0, 0)
+                }
+            }
+
+        }
+
+        private fun setStars(average: Double) {
+            val starList= arrayListOf(binding.starOne,binding.starTwo,binding.starThree,binding.starFour,binding.starFive)
+            for (a in average.toInt() until 5){
+                starList[a].setImageResource(R.drawable.ic_starborder)
+            }
+            for (a in average.toInt() downTo  1){
+                starList[a-1].setImageResource(R.drawable.ic_starfull)
+            }
+            if (average != floor(average))
+                when(floor(average).toInt()){
+                    1->binding.starTwo.setImageResource(R.drawable.ic_starhalf)
+                    2->binding.starThree.setImageResource(R.drawable.ic_starhalf)
+                    3->binding.starFour.setImageResource(R.drawable.ic_starhalf)
+                    4->binding.starFive.setImageResource(R.drawable.ic_starhalf)
+                }
 
         }
     }
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlaceViewHolder {
         val binding =
@@ -114,9 +156,7 @@ class PlaceAdapter(private val placeList: ArrayList<PlaceModel>) :
         val viewCreate =
             LayoutInflater.from(parent.context).inflate(R.layout.oneplacelayout, parent, false)
         return PlaceViewHolder(binding, viewCreate)
-
     }
-
 
     override fun getItemCount(): Int {
         return placeList.size
@@ -128,7 +168,8 @@ class PlaceAdapter(private val placeList: ArrayList<PlaceModel>) :
         holder.setData(createPlaceNow)
         holder.placeConstraint.setOnClickListener {
             val mId=createPlaceNow.id.toInt()
-            val action=SearchFragmentDirections.actionSearchFragmentToOnePlaceFragment(mId)
+            val placeName=createPlaceNow.placeName
+            val action=SearchFragmentDirections.actionSearchFragmentToOnePlaceFragment(mId,placeName)
             Navigation.findNavController(it).navigate(action)
         }
     }

@@ -1,4 +1,4 @@
-package com.example.bulkesfet.service
+package com.example.bulkesfet.adapter
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -14,9 +14,9 @@ import com.example.bulkesfet.utils.getImage
 import com.example.bulkesfet.utils.progressDrawable
 import com.example.bulkesfet.view.app.FavoritesFragment
 import com.example.bulkesfet.view.app.FavoritesFragmentDirections
-import com.example.bulkesfet.view.app.SearchFragmentDirections
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
+import kotlin.math.floor
 
 class FavAdapter(mFragment: Fragment, private val favList: ArrayList<PlaceModel>) :
     RecyclerView.Adapter<FavAdapter.FavViewHolder>() {
@@ -31,6 +31,7 @@ class FavAdapter(mFragment: Fragment, private val favList: ArrayList<PlaceModel>
         private val favBtn = binding.favCheck
 
         fun setData(placeDetail: PlaceModel, position: Int) {
+            getPlaceRate(placeDetail)
             placeName.text = placeDetail.placeName
             placeDescription.text=setText100(placeDetail.description)
             placeImage.getImage(placeDetail.images[0], progressDrawable(view.context))
@@ -49,9 +50,52 @@ class FavAdapter(mFragment: Fragment, private val favList: ArrayList<PlaceModel>
 
             }
         }
+
+        private fun getPlaceRate(placeDetail: PlaceModel) {
+            val placerate= arrayListOf<Int>()
+            firebaseDatabase.child("Comments").get().addOnSuccessListener {
+                for (snapshot in it.children){
+                    if (snapshot.child("placeID").value.toString()==placeDetail.id){
+                        placerate.add(snapshot.child("rate").value.toString().toInt())
+                    }
+                }
+                if(placerate.isNotEmpty()){
+                    binding.placeRateText.setCompoundDrawables(null,null,null,null)
+                    binding.starLayout.visibility=View.VISIBLE
+                    var string=binding.root.context.getString(R.string.countComment)
+                    string= String.format(string,placerate.average().toString(),placerate.size.toString())
+                    binding.placeRateText.text=string
+                    setStars(placerate.average())
+                    placerate.clear()
+                }else{
+                    binding.placeRateText.setText(R.string.noCommentFound)
+                    binding.starLayout.visibility=View.GONE
+                    binding.placeRateText.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_starborder, 0, 0, 0)
+                }
+            }
+
+        }
+
+        private fun setStars(average: Double) {
+            val starList= arrayListOf(binding.starOne,binding.starTwo,binding.starThree,binding.starFour,binding.starFive)
+            for (a in average.toInt() until 5){
+                starList[a].setImageResource(R.drawable.ic_starborder)
+            }
+            for (a in average.toInt() downTo  1){
+                starList[a-1].setImageResource(R.drawable.ic_starfull)
+            }
+            if (average != floor(average))
+                when(floor(average).toInt()){
+                    1->binding.starTwo.setImageResource(R.drawable.ic_starhalf)
+                    2->binding.starThree.setImageResource(R.drawable.ic_starhalf)
+                    3->binding.starFour.setImageResource(R.drawable.ic_starhalf)
+                    4->binding.starFive.setImageResource(R.drawable.ic_starhalf)
+                }
+
+        }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavAdapter.FavViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavViewHolder {
         val binding =
             OneplacelayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         val viewCreate =
@@ -59,7 +103,7 @@ class FavAdapter(mFragment: Fragment, private val favList: ArrayList<PlaceModel>
         return FavViewHolder(binding, viewCreate)
     }
 
-    override fun onBindViewHolder(holder: FavAdapter.FavViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: FavViewHolder, position: Int) {
         val createPlaceNow = favList[position]
         holder.setData(createPlaceNow,position)
         holder.placeConstraint.setOnClickListener {
