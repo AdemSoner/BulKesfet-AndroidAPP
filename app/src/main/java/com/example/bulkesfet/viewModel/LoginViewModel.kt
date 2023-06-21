@@ -5,24 +5,39 @@ import androidx.lifecycle.ViewModel
 import com.example.bulkesfet.model.User
 import com.google.firebase.auth.FirebaseAuth
 
-class LoginViewModel:ViewModel() {
+class LoginViewModel : ViewModel() {
     val loginErrorMessage = MutableLiveData<String>()
     val loginInProgress = MutableLiveData<Boolean>()
     val loginIsSuccess = MutableLiveData<Boolean>()
+    val loginIsAdmin = MutableLiveData<Boolean>()
 
-    fun signInWithFirebase(userInformation:User){
-        loginInProgress.value=true
-        FirebaseAuth.getInstance().signInWithEmailAndPassword(
-            userInformation.eposta,
-            userInformation.password)
-            .addOnCompleteListener {
-                if (it.isSuccessful){
-                    loginIsSuccess.value=true
-                }else{
-                    loginIsSuccess.value=false
-                    loginErrorMessage.value=it.exception?.message.toString()
+    fun signInWithFirebase(userInformation: User) {
+        loginInProgress.value = true
+        if (userInformation.eposta=="admin@bulkesfet.com"&& userInformation.password=="123456"){
+            FirebaseAuth.getInstance().signInWithEmailAndPassword(
+                userInformation.eposta,
+                userInformation.password
+            )
+                .addOnCompleteListener {
+                    loginIsAdmin.value = true
+                    loginInProgress.value = false
                 }
-                loginInProgress.value=false
-            }
+        }else{
+            FirebaseAuth.getInstance().signInWithEmailAndPassword(
+                userInformation.eposta,
+                userInformation.password
+            )
+                .addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        loginIsSuccess.value = true
+                    } else {
+                        loginIsSuccess.value = false
+                        loginErrorMessage.value = it.exception?.message.toString()
+                    }
+                    loginInProgress.value = false
+                }
+        }
+
+
     }
 }

@@ -69,10 +69,14 @@ dependencies {
     // Android Jetpack library implementations
     implementation "android.arch.lifecycle:extensions:1.1.1"
     implementation "androidx.fragment:fragment-ktx:1.6.0"
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
 
     // Image implementations
     implementation "com.github.bumptech.glide:glide:$glideVersion"
     implementation 'de.hdodenhof:circleimageview:3.1.0'
+    implementation 'com.github.yalantis:ucrop:2.2.6-native'
+    implementation 'com.squareup.picasso:picasso:2.8'
 
 
     implementation 'androidx.core:core-ktx:1.10.1'

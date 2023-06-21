@@ -25,6 +25,8 @@
     <string name="yourComments">Yorumlarınız</string>
     <string name="typeComment">Yorumunuzu giriniz.(Opsiyonel)</string>
     <string name="publishEveryone">Herkese Açık Yayınlanıyor.</string>
+    <string name="areYouSureToDelete">Silmek istediğinizden Emin Misiniz?</string>
+    <string name="finishOnBoard">Hadi Başlayalım</string>
 
 
 </resources>

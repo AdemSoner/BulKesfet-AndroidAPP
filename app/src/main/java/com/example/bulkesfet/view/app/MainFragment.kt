@@ -28,8 +28,7 @@ class MainFragment : Fragment() {
         activityListener.showOrHide(true)
         viewModel=ViewModelProviders.of(this)[MainViewModel::class.java]
         //TODO API VERİ ÇEKME İŞLEMİ BURADA
-        //viewModel.checkDatabase()
-        //viewModel.yorumekle()
+        viewModel.checkDatabase()
         initializeUI(binding.root)
         return binding.root
     }

@@ -84,12 +84,10 @@
 
             <Button
                 android:id="@+id/sign_inButton"
-                android:layout_width="wrap_content"
-                android:layout_height="48dp"
+                style="@style/buttonStyle"
                 android:layout_marginTop="32dp"
                 android:text="@string/btngiris"
                 android:textAllCaps="false"
-                android:background="@drawable/bnv_item_background"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.772"
                 app:layout_constraintStart_toStartOf="parent"

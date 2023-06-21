@@ -1,9 +1,12 @@
 package com.example.bulkesfet.adapter
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bulkesfet.R
 import com.example.bulkesfet.databinding.OneplacelayoutBinding
@@ -11,10 +14,14 @@ import com.example.bulkesfet.databinding.OneusercommentlayoutBinding
 import com.example.bulkesfet.model.Comments
 import com.example.bulkesfet.utils.getImage
 import com.example.bulkesfet.utils.progressDrawable
+import com.example.bulkesfet.view.app.FavoritesFragment
+import com.example.bulkesfet.view.app.UserCommentsFragment
+import com.google.firebase.database.FirebaseDatabase
 
-class UserCommentAdapter (private val commentList: ArrayList<Comments>) :
+class UserCommentAdapter (mFragment:Fragment,private val commentList: ArrayList<Comments>) :
     RecyclerView.Adapter<UserCommentAdapter.UserCommentViewHolder>(){
-    inner class UserCommentViewHolder(private val binding: OneusercommentlayoutBinding) : RecyclerView.ViewHolder(binding.root) {
+    val myFragment=mFragment
+    inner class UserCommentViewHolder(val binding: OneusercommentlayoutBinding) : RecyclerView.ViewHolder(binding.root) {
         private val placeName= binding.placeNameText
         private val placeImage= binding.placeImg
         private val userRate=binding.placeRateText
@@ -49,6 +56,34 @@ class UserCommentAdapter (private val commentList: ArrayList<Comments>) :
     override fun onBindViewHolder(holder: UserCommentAdapter.UserCommentViewHolder, position: Int) {
         val createCommentNow = commentList[position]
         holder.setData(createCommentNow)
+        holder.binding.deleteIMG.setOnClickListener {
+            val alert= AlertDialog.Builder(holder.binding.root.context)
+            alert.setTitle(R.string.areYouSureToDelete)
+                .setIcon(R.drawable.ic_warning)
+                .setPositiveButton(R.string.delete){ _,_ ->
+                    FirebaseDatabase.getInstance().reference.child("Comments").get()
+                        .addOnSuccessListener {
+                            var commentID="null"
+                            for (snapshot in it.children){
+                                val userUID=commentList[position].userUID
+                                val placeID=commentList[position].placeID
+                                if (snapshot.child("userUID").value==userUID
+                                    && snapshot.child("placeID").value==placeID){
+                                    commentID=snapshot.key.toString()
+                                    break
+                                }
+                            }
+                            if (commentID!="null")
+                                FirebaseDatabase.getInstance().reference.child("Comments").child(commentID).removeValue()
+                            commentList.removeAt(position)
+                            (myFragment as UserCommentsFragment).recyclerOlustur(commentList)
+                        }
+                }
+                .setNeutralButton(R.string.decline) { dialog, _ ->
+                    dialog.cancel()
+                }
+                .create().show()
+        }
     }
 
     override fun getItemCount(): Int {
@@ -58,8 +93,8 @@ class UserCommentAdapter (private val commentList: ArrayList<Comments>) :
     @SuppressLint("NotifyDataSetChanged")
     fun updateCommentList(newCommentList: List<Comments>) {
         commentList.clear()
-        commentList.addAll(newCommentList)
         notifyDataSetChanged()
+        commentList.addAll(newCommentList)
     }
 
 }

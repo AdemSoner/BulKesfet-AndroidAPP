@@ -82,10 +82,8 @@
 
                 <Button
                     android:id="@+id/btn_back"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/buttonStyle"
                     android:layout_marginStart="76dp"
-                    android:background="@drawable/bnv_item_background"
                     android:text="@string/goBack"
                     android:textAllCaps="false"
                     android:visibility="visible"
@@ -96,10 +94,8 @@
 
                 <Button
                     android:id="@+id/btnRegister"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/buttonStyle"
                     android:layout_marginTop="16dp"
-                    android:background="@drawable/bnv_item_background"
                     android:text="@string/signUp"
                     android:textAllCaps="false"
                     app:layout_constraintBottom_toBottomOf="parent"

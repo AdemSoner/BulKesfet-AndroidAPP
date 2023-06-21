@@ -10,6 +10,7 @@ import androidx.navigation.ui.NavigationUI.setupWithNavController
 import com.example.bulkesfet.R
 import com.example.bulkesfet.service.MainListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import java.io.File
 
 class MainActivity : AppCompatActivity(), MainListener {
     private lateinit var navController: NavController
@@ -28,5 +29,9 @@ class MainActivity : AppCompatActivity(), MainListener {
     override fun showOrHide(value: Boolean) {
         if(value) bottomMenu.visibility= View.VISIBLE
         else bottomMenu.visibility=View.GONE
+    }
+
+    override fun getFilesDirBenim(): File {
+        return File(filesDir,"croppedImage.jpg")
     }
 }

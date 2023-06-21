@@ -9,8 +9,11 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.bulkesfet.R
+import com.example.bulkesfet.adapter.FavAdapter
 import com.example.bulkesfet.adapter.UserCommentAdapter
 import com.example.bulkesfet.databinding.FragmentUserCommentsBinding
+import com.example.bulkesfet.model.Comments
+import com.example.bulkesfet.model.PlaceModel
 import com.example.bulkesfet.viewModel.UserCommentViewModel
 
 class UserCommentsFragment : Fragment() {
@@ -18,7 +21,7 @@ class UserCommentsFragment : Fragment() {
     private val binding get()=_binding!!
     lateinit var viewModel:UserCommentViewModel
     lateinit var userID:String
-    private val commentAdapter=UserCommentAdapter(arrayListOf())
+    private val commentAdapter=UserCommentAdapter(this,arrayListOf())
     var myLayoutManager: LinearLayoutManager? = null
 
     override fun onCreateView(
@@ -76,5 +79,14 @@ class UserCommentsFragment : Fragment() {
                     commentAdapter.updateCommentList(it)
             }
         })
+    }
+
+    fun recyclerOlustur(newCommentList: ArrayList<Comments>){
+        viewModel.commentCount.value=newCommentList.size
+        val myLayoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        binding.commentsRecyclerView.layoutManager = myLayoutManager
+        val myAdapter = UserCommentAdapter(this,newCommentList)
+        binding.commentsRecyclerView.adapter = myAdapter
+
     }
 }

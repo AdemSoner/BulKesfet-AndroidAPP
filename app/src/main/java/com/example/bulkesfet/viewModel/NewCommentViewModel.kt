@@ -14,7 +14,7 @@ class NewCommentViewModel: ViewModel() {
     val commentSuccess=MutableLiveData<String>()
 
     val rate=MutableLiveData(1)
-    private val commentID= MutableLiveData(0)
+    private var commentID= 0
     private val firebaseAuth=FirebaseAuth.getInstance().currentUser
     private val firebaseDatabase=FirebaseDatabase.getInstance().reference
 
@@ -28,7 +28,7 @@ class NewCommentViewModel: ViewModel() {
         val currentYear = calendar.get(Calendar.YEAR).toString()
         val time=MyDate(currentDay,currentMonth.toString(),currentYear)
         val setComment=Comments(placeID,placeName,placeImage,userUID,userName,userImage,rate.value!!,comment,time)
-        firebaseDatabase.child("Comments").child(commentID.value.toString()).setValue(setComment)
+        firebaseDatabase.child("Comments").child(commentID.toString()).setValue(setComment)
             .addOnSuccessListener {
                 commentSuccess.value="True"
                 loading.value=false
@@ -40,14 +40,14 @@ class NewCommentViewModel: ViewModel() {
     }
 
     fun findNewID(){
-        commentID.value=0
+        commentID=0
         firebaseDatabase.child("Comments").get()
             .addOnSuccessListener {
                 for(nowID in it.children){
-                    if (commentID.value.toString()!=nowID.key){
+                    if (commentID.toString()!=nowID.key){
                         break
                     }
-                    commentID.value = commentID.value!! + 1
+                    commentID += 1
                 }
             }
     }

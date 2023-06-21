@@ -5,3 +5,7 @@ Yorum yapma eklendi.
 Yorumları listeleme eklendi.
 Her yerin ortalamasına göre yıldız ayarı yapıldı.
 Detay sayfasında tüm resimleri gösteren recycler view eklendi.
+------------------------------------------------------------- x4
+Kullanıcının yeni konum eklemesine olanak sağlayan sayfa hazırlandı.
+Admin girişi tasarlandı.
+BugFix'ler giderildi.

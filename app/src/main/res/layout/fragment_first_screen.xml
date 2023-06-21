@@ -60,12 +60,15 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnNext"
-        style="@style/btn_style"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:drawableEnd="@drawable/onboarding_airplane"
         android:text="@string/nextOnBoard"
         android:textAllCaps="false"
         android:textSize="@dimen/text_19d"
+        android:backgroundTint="@color/pink"
+        android:color="@color/white"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

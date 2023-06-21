@@ -100,14 +100,9 @@
             app:enterAnim="@anim/slide_in"
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
-            app:popExitAnim="@anim/slide_out" />
-        <action
-            android:id="@+id/action_profileFragment_to_registerFragment"
-            app:destination="@id/registerFragment"
-            app:enterAnim="@anim/slide_in"
-            app:exitAnim="@anim/fade_out"
-            app:popEnterAnim="@anim/fade_in"
-            app:popExitAnim="@anim/slide_out" />
+            app:popExitAnim="@anim/slide_out"
+            app:popUpTo="@id/mainFragment"
+            app:popUpToInclusive="false" />
         <action
             android:id="@+id/action_profileFragment_to_userCommentsFragment"
             app:destination="@id/userCommentsFragment"
@@ -115,6 +110,9 @@
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
             app:popExitAnim="@anim/slide_out" />
+        <action
+            android:id="@+id/action_profileFragment_to_newPlaceFragment"
+            app:destination="@id/newPlaceFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -135,6 +133,11 @@
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
             app:popExitAnim="@anim/slide_out" />
+        <action
+            android:id="@+id/action_loginFragment_to_adminMainFragment"
+            app:destination="@id/adminMainFragment"
+            app:enterAnim="@anim/slide_in"
+            app:popExitAnim="@anim/slide_out" />
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
@@ -142,19 +145,14 @@
         android:label="fragment_register"
         tools:layout="@layout/fragment_register" >
         <action
-            android:id="@+id/action_registerFragment_to_profileFragment"
-            app:destination="@id/profileFragment"
-            app:enterAnim="@anim/slide_in"
-            app:exitAnim="@anim/fade_out"
-            app:popEnterAnim="@anim/fade_in"
-            app:popExitAnim="@anim/slide_out" />
-        <action
             android:id="@+id/action_registerFragment_to_loginFragment"
             app:destination="@id/loginFragment"
             app:enterAnim="@anim/slide_in"
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
-            app:popExitAnim="@anim/slide_out" />
+            app:popExitAnim="@anim/slide_out"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="false" />
     </fragment>
     <fragment
         android:id="@+id/onePlaceFragment"
@@ -223,6 +221,7 @@
             android:defaultValue="null"
             app:argType="string" />
     </fragment>
+
     <dialog
         android:id="@+id/newCommentFragment"
         android:name="com.example.bulkesfet.view.app.NewCommentFragment"
@@ -251,4 +250,27 @@
             app:argType="string"
             android:defaultValue="null" />
     </dialog>
+
+    <fragment
+        android:id="@+id/adminMainFragment"
+        android:name="com.example.bulkesfet.view.admin.AdminMainFragment"
+        android:label="AdminMainFragment" />
+    <fragment
+        android:id="@+id/newPlaceFragment"
+        android:name="com.example.bulkesfet.view.app.NewPlaceFragment"
+        android:label="NewPlaceFragment" >
+        <argument
+            android:name="userUID"
+            app:argType="string"
+            android:defaultValue="null" />
+        <argument
+            android:name="userName"
+            app:argType="string"
+            android:defaultValue="null" />
+        <argument
+            android:name="userImage"
+            app:argType="string"
+            android:defaultValue="null" />
+    </fragment>
+
 </navigation>

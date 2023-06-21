@@ -1,25 +1,28 @@
 package com.example.bulkesfet.adapter
 
 import android.annotation.SuppressLint
-import android.util.Log
+import android.app.AlertDialog
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bulkesfet.R
-import com.example.bulkesfet.databinding.FragmentPlaceCommentsBinding
 import com.example.bulkesfet.databinding.OnecommentlayoutBinding
 import com.example.bulkesfet.model.Comments
-import com.example.bulkesfet.model.NewCommentModel
+import com.example.bulkesfet.service.PlaceCommentListener
 import com.example.bulkesfet.utils.getImage
 import com.example.bulkesfet.utils.progressDrawable
-import com.example.bulkesfet.view.app.NewCommentFragment
+import com.example.bulkesfet.view.app.PlaceCommentsFragment
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 
-class PlaceCommentAdapter(private val commentList: ArrayList<Comments>) :
+class PlaceCommentAdapter(mFragment:Fragment, private val commentList: ArrayList<Comments>,
+                          private val commentListener: PlaceCommentListener) :
     RecyclerView.Adapter<PlaceCommentAdapter.PlaceCommentViewHolder>() {
-
-    inner class PlaceCommentViewHolder(private val binding: OnecommentlayoutBinding,private val mainBinding: FragmentPlaceCommentsBinding) :
+    private val myFragment=mFragment
+    private var flag=0
+    inner class PlaceCommentViewHolder(val binding: OnecommentlayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
         private val userName = binding.userNameText
         private val userImage = binding.Img
@@ -41,24 +44,26 @@ class PlaceCommentAdapter(private val commentList: ArrayList<Comments>) :
             val date=commentDetail.date.day+"/"+commentDetail.date.month+"/"+commentDetail.date.year
             userDate.text=date
         }
-
         private fun checkUser(comment:Comments) {
             if (firebaseAuth!=null) {
                 if (firebaseAuth.uid==comment.userUID){
+                    flag=1
                     binding.userImagesGroup.visibility=View.VISIBLE
                 } else {
                     binding.userImagesGroup.visibility=View.GONE
                 }
-
             }
+            else{
+                binding.userImagesGroup.visibility=View.GONE
+            }
+
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlaceCommentViewHolder {
         val binding =
             OnecommentlayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        val mainBinding= FragmentPlaceCommentsBinding.inflate(LayoutInflater.from(parent.context),parent,false)
-        return PlaceCommentViewHolder(binding,mainBinding)
+        return PlaceCommentViewHolder(binding)
     }
 
     override fun getItemCount(): Int {
@@ -68,6 +73,37 @@ class PlaceCommentAdapter(private val commentList: ArrayList<Comments>) :
     override fun onBindViewHolder(holder: PlaceCommentViewHolder, position: Int) {
         val createCommentNow = commentList[position]
         holder.setData(createCommentNow)
+        holder.binding.deleteIMG.setOnClickListener {
+            val alert= AlertDialog.Builder(holder.binding.root.context)
+            alert.setTitle(R.string.areYouSureToDelete)
+                .setIcon(R.drawable.ic_warning)
+                .setPositiveButton(R.string.delete){ _,_ ->
+                    FirebaseDatabase.getInstance().reference.child("Comments").get()
+                        .addOnSuccessListener {
+                            var commentID="null"
+                            for (snapshot in it.children){
+                                val userUID=commentList[position].userUID
+                                val placeID=commentList[position].placeID
+                                if (snapshot.child("userUID").value==userUID
+                                    && snapshot.child("placeID").value==placeID){
+                                    commentID=snapshot.key.toString()
+                                    break
+                                }
+                            }
+                            if (commentID!="null")
+                                FirebaseDatabase.getInstance().reference.child("Comments").child(commentID).removeValue()
+                            commentList.removeAt(position)
+                            (myFragment as PlaceCommentsFragment).recyclerOlustur(commentList)
+                        }
+                }
+                .setNeutralButton(R.string.decline) { dialog, _ ->
+                    dialog.cancel()
+                }
+                .create().show()
+        }
+        if (commentList.size==position+1 && flag==0){
+            commentListener.setVisibility()
+        }
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -76,7 +112,5 @@ class PlaceCommentAdapter(private val commentList: ArrayList<Comments>) :
         notifyDataSetChanged()
         commentList.addAll(newCommentList)
     }
-
-
 }
 

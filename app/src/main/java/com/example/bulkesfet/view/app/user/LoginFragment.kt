@@ -75,6 +75,14 @@ class LoginFragment : Fragment() {
                 else enableDisableComponents(true)
             }
         })
+        viewModel.loginIsAdmin.observe(viewLifecycleOwner, Observer { admin->
+            admin?.let {
+                if (it){
+                    val action=LoginFragmentDirections.actionLoginFragmentToAdminMainFragment()
+                    Navigation.findNavController(binding.root).navigate(action)
+                }
+            }
+        })
     }
 
     private fun enableDisableComponents(value: Boolean) {

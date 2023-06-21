@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,12 +13,14 @@ import com.example.bulkesfet.databinding.FragmentSearchBinding
 import com.example.bulkesfet.adapter.PlaceAdapter
 import com.example.bulkesfet.viewModel.SearchViewModel
 
+
 class SearchFragment : Fragment() {
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
     private lateinit var viewModel: SearchViewModel
     private val placeAdapter = PlaceAdapter(arrayListOf())
     var myLayoutManager: LinearLayoutManager? = null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -39,8 +42,21 @@ class SearchFragment : Fragment() {
         }
         viewModel.refreshDataFromFirebase(query)
         observeLiveData()
-    }
 
+        binding.searchView.setOnEditorActionListener { v, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                performSearch(v.text.toString())
+                true
+            } else {
+                false
+            }
+        }
+
+
+    }
+    private fun performSearch(query: String) {
+        viewModel.getDataFromCity(query)
+    }
     private fun observeLiveData() {
         viewModel.placeLoading.observe(viewLifecycleOwner, Observer { loading ->
             loading?.let {
@@ -75,4 +91,6 @@ class SearchFragment : Fragment() {
             }
         })
     }
+
+
 }

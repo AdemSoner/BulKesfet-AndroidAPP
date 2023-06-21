@@ -77,7 +77,7 @@
         android:layout_height="120dp"
         android:contentDescription="@string/camping"
         android:scaleType="fitXY"
-        android:src="@drawable/camping"
+        android:src="@drawable/history"
         app:layout_constraintBottom_toBottomOf="@id/museumImageButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/museumImageButton"

@@ -8,7 +8,8 @@ data class SignUp(val nameSurname:String,
                   val password:String,
                   val imageURL: String)
 
-data class UserProfile(val nameSurname:String,
+data class UserProfile(val userUID:String,
+                       val nameSurname:String,
                        val email:String,
                        val imageURL: String)
 

@@ -1,5 +1,6 @@
 package com.example.bulkesfet.viewModel
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.bulkesfet.model.PlaceModel
@@ -24,7 +25,7 @@ class SearchViewModel : ViewModel() {
     fun refreshDataFromFirebase(queryPlaceName:String){
         placeError.value = false
         placeLoading.value = true
-        val query = FirebaseDatabase.getInstance().reference.child("Places").orderByKey()
+        val query = firebaseDatabase.child("Places").orderByKey()
         query.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (singleSnapshot in snapshot.children) {
@@ -75,6 +76,10 @@ class SearchViewModel : ViewModel() {
                 placeError.value=true
             }
         })
+    }
+
+    fun getDataFromCity(placeName:String){
+        Log.e("ARAMA BASLADİ","Aranacak şehir $placeName")
     }
 
 }

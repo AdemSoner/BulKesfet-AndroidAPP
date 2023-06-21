@@ -1,6 +1,5 @@
 package com.example.bulkesfet.view.app
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,36 +9,34 @@ import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.bulkesfet.R
-import com.example.bulkesfet.databinding.FragmentNewCommentBinding
+import com.example.bulkesfet.databinding.FragmentCommentBinding
 import com.example.bulkesfet.utils.getImage
 import com.example.bulkesfet.utils.progressDrawable
 import com.example.bulkesfet.viewModel.NewCommentViewModel
 import com.example.bulkesfet.viewModel.PlaceCommentViewModel
 
-class NewCommentFragment : DialogFragment() {
-    private var _binding: FragmentNewCommentBinding?=null
+
+class CommentFragment : DialogFragment() {
+    private var _binding: FragmentCommentBinding? = null
     private val binding get() = _binding!!
     lateinit var viewModel:NewCommentViewModel
-    lateinit var viewModelx:PlaceCommentViewModel
+    private lateinit var viewModelx: PlaceCommentViewModel
     lateinit var placeID:String
     lateinit var placeName:String
     lateinit var placeImage:String
-    lateinit var userName:String
-    lateinit var userImage:String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding= FragmentNewCommentBinding.inflate(inflater,container,false)
+        _binding= FragmentCommentBinding.inflate(inflater,container,false)
         viewModel=ViewModelProviders.of(this)[NewCommentViewModel::class.java]
         viewModelx=ViewModelProviders.of(requireParentFragment())[PlaceCommentViewModel::class.java]
+        viewModelx.getUserDetails()
         viewModel.findNewID() // Yeni yorum için olmayan bir id buldurma işlemi başlatılıyor.
-        placeName=viewModelx.userDetail.value!!.placeName
         placeID=viewModelx.userDetail.value!!.placeID
         placeImage=viewModelx.userDetail.value!!.placeImage
-        userName=viewModelx.userDetail.value!!.userName
-        userImage=viewModelx.userDetail.value!!.userImage
+        placeName=viewModelx.userDetail.value!!.placeName
         return binding.root
     }
 
@@ -47,7 +44,7 @@ class NewCommentFragment : DialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel.loading.value=true
         viewModel.rate.value=5
-        initializeUI(view)
+        initializeUI()
         observeLiveData()
     }
 
@@ -85,15 +82,15 @@ class NewCommentFragment : DialogFragment() {
                 if(it=="True"){
                     dismiss()
                     Toast.makeText(context,R.string.commentSuccess,Toast.LENGTH_LONG).show()
-                }else{
+                }else
                     Toast.makeText(context,it,Toast.LENGTH_LONG).show()
-                }
+
             }
         })
     }
 
-    private fun initializeUI(view: View) {
-        setComponents(view.context)
+    private fun initializeUI() {
+        setComponents()
         binding.starOne.setOnClickListener { viewModel.rate.value=1 }
         binding.starTwo.setOnClickListener { viewModel.rate.value=2 }
         binding.starThree.setOnClickListener { viewModel.rate.value=3 }
@@ -106,14 +103,14 @@ class NewCommentFragment : DialogFragment() {
             dialog!!.cancel()
         }
         binding.sendLink.setOnClickListener {
-            viewModel.setNewComment(placeID,placeName,placeImage,userName,userImage,binding.userComment.text.toString())
+            viewModel.setNewComment(viewModelx.userDetail.value!!.placeID,viewModelx.userDetail.value!!.placeName,viewModelx.userDetail.value!!.placeImage,viewModelx.userDetail.value!!.userName,viewModelx.userDetail.value!!.userImage,binding.userComment.text.toString())
         }
     }
 
-    private fun setComponents(context: Context) {
+    private fun setComponents() {
         binding.placeNameTextView.text=placeName
-        binding.userProfileImage.getImage(userImage, progressDrawable(context))
-        binding.userNameTextView.text=userName
+        binding.userProfileImage.getImage(viewModelx.userImage.value!!, progressDrawable(binding.root.context))
+        binding.userNameTextView.text=viewModelx.userName.value
         viewModel.loading.value=false
     }
 

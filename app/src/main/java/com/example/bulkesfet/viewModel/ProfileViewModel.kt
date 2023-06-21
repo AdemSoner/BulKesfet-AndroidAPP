@@ -1,10 +1,15 @@
 package com.example.bulkesfet.viewModel
 
+import android.app.ProgressDialog
+import android.content.Context
+import android.net.Uri
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.bulkesfet.model.Comments
 import com.example.bulkesfet.model.MyDate
 import com.example.bulkesfet.model.UserProfile
+import com.example.bulkesfet.view.app.UserCommentsFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.FirebaseDatabase
@@ -14,23 +19,30 @@ import kotlin.random.Random
 
 class ProfileViewModel:ViewModel() {
     val loading= MutableLiveData<Boolean>()
-    val loadUserConstraint=MutableLiveData<Boolean>()
     val error= MutableLiveData<String>()
-    val userLoggedIn = MutableLiveData<Boolean>()
 
+    val userLoggedIn = MutableLiveData(true)
+    val refreshPhoto= MutableLiveData<Boolean>()
     val comment = MutableLiveData<Comments>()
     val user = MutableLiveData<UserProfile>()
     val commentCount = MutableLiveData<Int>()
     private val list = mutableListOf<DataSnapshot>()
+    val selectingImage=MutableLiveData<Uri>()
+
 
 
     private val firebaseAuth=FirebaseAuth.getInstance()
     private val firebaseDatabase=FirebaseDatabase.getInstance().reference
-    private val firebaseStorage=FirebaseStorage.getInstance().reference
 
     fun userLogDetail(){
         loading.value=true
-        userLoggedIn.value = firebaseAuth.currentUser!=null
+        if(firebaseAuth.currentUser!=null){
+            getViewComponents()
+        }else{
+            loading.value=false
+            userLoggedIn.value = false
+        }
+
     }
 
     fun logout(){
@@ -38,13 +50,9 @@ class ProfileViewModel:ViewModel() {
         userLogDetail()
     }
 
-    fun getViewComponents(){
-        getCount()
+    private fun getViewComponents(){
         getUser()
-    }
-
-    fun getUserUID():String{
-        return firebaseAuth.uid.toString()
+        getCount()
     }
 
     private fun getCount() {
@@ -74,8 +82,9 @@ class ProfileViewModel:ViewModel() {
                     val commentDate=MyDate(placeDay,placeMonth,placeYear)
                     val commentOne= Comments(placeID,placeName,placeImage,userUID,userName,userImage,placeRate,placeComment,commentDate)
                     comment.value=commentOne
-                    commentCount.value=countDown
                 }
+                commentCount.value=countDown
+                loading.value=false
             }
     }
 
@@ -86,11 +95,60 @@ class ProfileViewModel:ViewModel() {
                     val userNameSurname=it.child("nameSurname").value.toString()
                     val userEmail=it.child("email").value.toString()
                     val imageURL=it.child("imageURL").value.toString()
-                    user.value=UserProfile(userNameSurname,userEmail,imageURL)
-                    loadUserConstraint.value=true
+                    user.value=UserProfile(firebaseAuth.currentUser!!.uid,userNameSurname,userEmail,imageURL)
                 }
             }
 
+    }
+
+    fun uploadImage(path: Uri,context: Context){
+        val imageRef =
+            FirebaseStorage.getInstance().reference.child("${firebaseAuth.uid}/images/profilepicture.jpg")
+        val pd = ProgressDialog(context)
+        pd.setTitle("Resminiz hazırlanıyor")
+        pd.show()
+        imageRef.putFile(path)
+            .addOnSuccessListener {
+                pd.dismiss()
+                imageRef.downloadUrl
+                    .addOnCompleteListener {
+                        val imageDatabaseURL = it.result.toString()
+                        firebaseDatabase.child("Users")
+                            .child(firebaseAuth.uid.toString())
+                            .child("imageURL")
+                            .setValue(imageDatabaseURL)
+                            .addOnSuccessListener {
+                                refreshPhoto.value=true
+                            }
+
+                    }
+            }
+            .addOnFailureListener {
+                pd.dismiss()
+            }
+            .addOnProgressListener {
+                val progress = (100 * it.bytesTransferred) / it.totalByteCount
+                pd.setMessage("Uploaded: ${progress.toInt()}%")
+            }
+    }
+
+    fun deleteComment(userUID:String,placeID:String) {
+        firebaseDatabase.child("Comments").get()
+            .addOnSuccessListener {
+                var commentID = "null"
+                for (snapshot in it.children) {
+                    if (snapshot.child("userUID").value == userUID
+                        && snapshot.child("placeID").value == placeID
+                    ) {
+                        commentID = snapshot.key.toString()
+                        break
+                    }
+                }
+                if (commentID != "null")
+                    FirebaseDatabase.getInstance().reference.child("Comments").child(commentID)
+                        .removeValue()
+                getViewComponents()
+            }
     }
 
 }
