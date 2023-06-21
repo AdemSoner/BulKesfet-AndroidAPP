@@ -9,6 +9,9 @@ import com.example.bulkesfet.view.splashAndOnBoard.screens.FirstScreen
 import com.example.bulkesfet.view.splashAndOnBoard.screens.SecondScreen
 import com.example.bulkesfet.databinding.FragmentOnBoardingBinding
 import com.example.bulkesfet.adapter.OnBoardAdapter
+import com.example.bulkesfet.view.splashAndOnBoard.screens.FifthScreen
+import com.example.bulkesfet.view.splashAndOnBoard.screens.FourthScreen
+import com.example.bulkesfet.view.splashAndOnBoard.screens.ThirdScreen
 
 
 class OnBoardingFragment : Fragment() {
@@ -20,7 +23,7 @@ class OnBoardingFragment : Fragment() {
     ): View {
         _binding = FragmentOnBoardingBinding.inflate(inflater, container, false)
         val fragmentList = arrayListOf<Fragment>(
-            FirstScreen(), SecondScreen()
+            FirstScreen(), SecondScreen(), ThirdScreen(), FourthScreen(),FifthScreen()
         )
         val adapter = OnBoardAdapter(
             fragmentList, requireActivity().supportFragmentManager, lifecycle

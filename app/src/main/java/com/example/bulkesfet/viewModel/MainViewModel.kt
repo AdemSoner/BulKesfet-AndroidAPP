@@ -41,6 +41,7 @@ class MainViewModel : ViewModel() {
                     val placeName = response.body()?.get(a)?.placeName
                     val placeDescription = response.body()?.get(a)?.description
                     val placeCategory = response.body()?.get(a)?.category
+                    val placeCity = response.body()?.get(a)?.city
                     val placeAdress = response.body()?.get(a)?.address
                     val placePrice = response.body()?.get(a)?.price
                     val placeImages = response.body()?.get(a)?.images
@@ -49,6 +50,7 @@ class MainViewModel : ViewModel() {
                         && placeName != ""
                         && placeDescription != ""
                         && placeCategory != ""
+                        && placeCity != ""
                         && placeAdress != ""
                         && placePrice != ""
                     ) {
@@ -56,6 +58,7 @@ class MainViewModel : ViewModel() {
                             mID!!,
                             placeName!!,
                             placeCategory!!,
+                            placeCity!!,
                             placeDescription!!,
                             placePrice!!,
                             placeAdress!!,

@@ -116,8 +116,6 @@ class OnePlaceFragment : Fragment(),ImageClickListener {
                     enableDisableComponents(it)
             }
 
-
-
         })
         viewModel.error.observe(viewLifecycleOwner, Observer { error ->
             error?.let {

@@ -9,6 +9,8 @@ data class PlaceModel(
     val placeName: String,
     @SerializedName("category")
     val category: String,
+    @SerializedName("city")
+    val city: String,
     @SerializedName("description")
     val description: String,
     @SerializedName("price")

@@ -29,7 +29,7 @@ class FavoritesFragment : Fragment() {
         _binding=FragmentFavoritesBinding.inflate(inflater,container,false)
         viewModel= ViewModelProviders.of(this)[FavoritesViewModel::class.java]
         viewModel.loading.value=true
-        myLayoutManager= LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false) // TODO Burada vertical horizontal modu var
+        myLayoutManager= LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         binding.favRecyclerView.layoutManager=myLayoutManager
         binding.favRecyclerView.adapter=favAdapter
         return binding.root

@@ -34,7 +34,7 @@ class NewPlaceViewModel : ViewModel() {
         context: Context
     ) {
         loading.value=true
-        placeOne=PlaceModel(placeID.toString(),placeName,placeCategory,placeDescription,placePrice,placeAdress,list)
+        placeOne=PlaceModel(placeID.toString(),placeName,placeCategory,placeCity,placeDescription,placePrice,placeAdress,list)
         uploadStorage(uriLists,context,uriLists.size)
     }
 
@@ -92,9 +92,10 @@ class NewPlaceViewModel : ViewModel() {
         val pName=placeOne.placeName
         val pAdress=placeOne.address
         val pCategory=placeOne.category
+        val pCity=placeOne.city
         val pDescrp=placeOne.description
         val pPrice=placeOne.price
-        val lastPlace=PlaceModel(pID,pName,pCategory,pDescrp,pPrice,pAdress,list)
+        val lastPlace=PlaceModel(pID,pName,pCategory,pCity,pDescrp,pPrice,pAdress,list)
         firebaseDatabase.child("PlaceRequests").child(placeID.toString()).setValue(lastPlace)
             .addOnSuccessListener {
                 requestSuccess.value="True"

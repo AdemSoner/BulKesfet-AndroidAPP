@@ -18,7 +18,6 @@ class UserCommentViewModel : ViewModel() {
 
     private val firebaseDatabase = FirebaseDatabase.getInstance().reference
 
-    // TODO SON YORUM SİLİNDİĞİNDE SAYFA YENİLENMESİ
 
     fun getCommentsFromFirebase(userUID: String) {
         loading.value = true

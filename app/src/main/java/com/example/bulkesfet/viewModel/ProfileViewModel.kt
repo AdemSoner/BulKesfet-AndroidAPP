@@ -20,7 +20,7 @@ import kotlin.random.Random
 class ProfileViewModel:ViewModel() {
     val loading= MutableLiveData<Boolean>()
     val error= MutableLiveData<String>()
-
+    val adminLogin=MutableLiveData(false)
     val userLoggedIn = MutableLiveData(true)
     val refreshPhoto= MutableLiveData<Boolean>()
     val comment = MutableLiveData<Comments>()
@@ -37,12 +37,20 @@ class ProfileViewModel:ViewModel() {
     fun userLogDetail(){
         loading.value=true
         if(firebaseAuth.currentUser!=null){
+            checkAdminLogin()
             getViewComponents()
         }else{
             loading.value=false
             userLoggedIn.value = false
         }
 
+    }
+
+    private fun checkAdminLogin() {
+        val email=firebaseAuth.currentUser!!.email
+        if (email=="admin@bulkesfet.com"){
+            adminLogin.value=true
+        }
     }
 
     fun logout(){

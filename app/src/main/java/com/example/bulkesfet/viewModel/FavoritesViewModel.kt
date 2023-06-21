@@ -54,12 +54,13 @@ class FavoritesViewModel: ViewModel() {
                                     val placeCategory = snapshot.child("category").value.toString()
                                     val placeDescription = snapshot.child("description").value.toString()
                                     val placeAdress = snapshot.child("address").value.toString()
+                                    val placeCity = snapshot.child("city").value.toString()
                                     val placePrice = snapshot.child("price").value.toString()
                                     val placeImagesCount = snapshot.child("images").childrenCount
                                     val placeImages= arrayListOf<String>()
                                     for (b in 0 until placeImagesCount)
                                         placeImages.add(snapshot.child("images").child(b.toString()).value.toString())
-                                    val place = PlaceModel(a,placeName,placeCategory,placeDescription,placePrice,placeAdress,placeImages)
+                                    val place = PlaceModel(a,placeName,placeCategory,placeCity,placeDescription,placePrice,placeAdress,placeImages)
                                     favList.add(place)
                                     if (placeIDS[itemCountNow-1]==a){
                                         itemCount.value=itemCountNow

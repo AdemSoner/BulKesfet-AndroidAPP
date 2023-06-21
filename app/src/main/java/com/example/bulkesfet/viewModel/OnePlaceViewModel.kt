@@ -24,6 +24,7 @@ class OnePlaceViewModel : ViewModel() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val placeName = snapshot.child("placeName").value.toString()
                 val placeCategory = snapshot.child("category").value.toString()
+                val placeCity = snapshot.child("city").value.toString()
                 val placePrice = snapshot.child("price").value.toString()
                 val placeAddress = snapshot.child("address").value.toString()
                 val placeDescription = snapshot.child("description").value.toString()
@@ -38,6 +39,7 @@ class OnePlaceViewModel : ViewModel() {
                     mID,
                     placeName,
                     placeCategory,
+                    placeCity,
                     placeDescription,
                     placePrice,
                     placeAddress,

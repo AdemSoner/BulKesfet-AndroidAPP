@@ -113,6 +113,13 @@
         <action
             android:id="@+id/action_profileFragment_to_newPlaceFragment"
             app:destination="@id/newPlaceFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_adminMainFragment"
+            app:destination="@id/adminMainFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -254,7 +261,21 @@
     <fragment
         android:id="@+id/adminMainFragment"
         android:name="com.example.bulkesfet.view.admin.AdminMainFragment"
-        android:label="AdminMainFragment" />
+        android:label="AdminMainFragment" >
+        <action
+            android:id="@+id/action_adminMainFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out" />
+        <action
+            android:id="@+id/action_adminMainFragment_to_placeRequestsFragment"
+            app:destination="@id/placeRequestsFragment" />
+        <action
+            android:id="@+id/action_adminMainFragment_to_allCommentsFragment"
+            app:destination="@id/allCommentsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/newPlaceFragment"
         android:name="com.example.bulkesfet.view.app.NewPlaceFragment"
@@ -271,6 +292,36 @@
             android:name="userImage"
             app:argType="string"
             android:defaultValue="null" />
+    </fragment>
+    <fragment
+        android:id="@+id/placeRequestsFragment"
+        android:name="com.example.bulkesfet.view.admin.PlaceRequestsFragment"
+        android:label="PlaceRequestsFragment" >
+        <action
+            android:id="@+id/action_placeRequestsFragment_to_placeRequestDetailFragment"
+            app:destination="@id/placeRequestDetailFragment" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/allCommentsFragment"
+        android:name="com.example.bulkesfet.view.admin.AllCommentsFragment"
+        android:label="AllCommentsFragment" />
+    <fragment
+        android:id="@+id/placeRequestDetailFragment"
+        android:name="com.example.bulkesfet.view.admin.PlaceRequestDetailFragment"
+        android:label="PlaceRequestDetailFragment" >
+        <action
+            android:id="@+id/action_placeRequestDetailFragment_to_adminMainFragment"
+            app:destination="@id/adminMainFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out" />
+        <argument
+            android:name="requestID"
+            app:argType="string"
+            android:defaultValue="null" />
+
     </fragment>
 
 </navigation>

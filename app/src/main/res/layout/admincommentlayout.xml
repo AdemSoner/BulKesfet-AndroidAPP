@@ -111,6 +111,15 @@
             app:layout_constraintTop_toBottomOf="@id/placeNameText"
             app:layout_constraintBottom_toTopOf="@id/placeDescription"
             app:layout_constraintVertical_bias="0.45" />
+        <TextView
+            android:id="@+id/userNameText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:layout_marginStart="5dp"
+            app:layout_constraintStart_toEndOf="@id/placeRateText"
+            app:layout_constraintTop_toTopOf="@id/placeRateText"
+            app:layout_constraintBottom_toBottomOf="@id/placeRateText" />
 
         <TextView
             android:id="@+id/placeDescription"

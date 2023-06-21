@@ -5,7 +5,7 @@ import retrofit2.Call
 import retrofit2.http.GET
 
 interface PlaceAPI {
-    @GET("bulkesfet/place")
+    @GET("bulkesfet/place2")
     fun getPlaceDetails(): Call<List<PlaceModel>>
 }
 

@@ -34,83 +34,45 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginBottom="10dp"
-            android:text="TextView"
             android:layout_marginEnd="2dp"
+            android:text="TextView"
             android:textSize="16sp"
             android:textStyle="bold"
-
-            app:layout_constraintEnd_toStartOf="@id/commentDateText"
+            app:layout_constraintEnd_toStartOf="@id/infoIMG"
             app:layout_constraintStart_toEndOf="@+id/placeImg"
             app:layout_constraintTop_toTopOf="@+id/placeImg"
             app:layout_constraintVertical_bias="0.45" />
 
         <TextView
-            android:id="@+id/commentDateText"
+            android:id="@+id/placePriceText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
             android:text="TextView"
+            android:layout_marginStart="8dp"
+            android:layout_marginBottom="10dp"
             android:layout_marginEnd="2dp"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
-
-        <LinearLayout
-            android:id="@+id/startLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="3dp"
-            app:layout_constraintTop_toBottomOf="@id/placeNameText"
+            android:textSize="12sp"
+            app:layout_constraintTop_toBottomOf="@id/placeAdressText"
             app:layout_constraintStart_toEndOf="@id/placeImg"
-            app:layout_constraintBottom_toTopOf="@id/placeDescription">
+            app:layout_constraintEnd_toStartOf="@id/infoIMG"/>
 
-            <ImageView
-                android:id="@+id/starOne"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_starfull" />
-
-            <ImageView
-                android:id="@+id/starTwo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_starfull" />
-
-            <ImageView
-                android:id="@+id/starThree"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_starfull" />
-
-            <ImageView
-                android:id="@+id/starFour"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_starfull" />
-
-            <ImageView
-                android:id="@+id/starFive"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_starfull" />
-
-        </LinearLayout>
 
         <TextView
-            android:id="@+id/placeRateText"
-            android:layout_width="wrap_content"
+            android:id="@+id/placeAdressText"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/noComments"
             android:textSize="12sp"
             android:drawablePadding="3dp"
             android:gravity="center_vertical"
-            android:padding="3dp"
-            app:layout_constraintStart_toEndOf="@id/startLayout"
+            android:layout_marginStart="8dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="2dp"
             app:layout_constraintTop_toBottomOf="@id/placeNameText"
-            app:layout_constraintBottom_toTopOf="@id/placeDescription"
+            app:layout_constraintStart_toEndOf="@id/placeImg"
+            app:layout_constraintEnd_toStartOf="@id/infoIMG"
             app:layout_constraintVertical_bias="0.45" />
+
 
         <TextView
             android:id="@+id/placeDescription"
@@ -120,28 +82,32 @@
             android:paddingStart="@dimen/text_7d"
             android:paddingEnd="@dimen/text_7d"
             android:text="TextView"
-            android:textSize="@dimen/text_9d"
+            android:textSize="@dimen/text_7d"
             android:gravity="start"
-            android:scrollbars="vertical"
             app:layout_constraintBottom_toBottomOf="@+id/placeImg"
-            app:layout_constraintEnd_toStartOf="@id/deleteIMG"
+            app:layout_constraintEnd_toEndOf="@id/infoIMG"
             app:layout_constraintStart_toEndOf="@+id/placeImg"
-            app:layout_constraintTop_toBottomOf="@id/placeRateText" />
-
-
+            app:layout_constraintTop_toBottomOf="@id/placePriceText" />
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/deleteIMG"
+            android:id="@+id/infoIMG"
             android:layout_width="28dp"
             android:layout_height="28dp"
             android:layout_marginTop="5dp"
-            android:layout_marginEnd="10dp"
-            android:src="@drawable/ic_delete"
+            android:layout_marginEnd="20dp"
+            android:src="@drawable/ic_info"
             app:civ_border_width="0dp"
             app:civ_border_color="#FF000000"
-            app:layout_constraintTop_toBottomOf="@id/commentDateText"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/placePriceText"/>
 
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="363dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

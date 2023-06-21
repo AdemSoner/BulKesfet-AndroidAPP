@@ -35,35 +35,35 @@ class MainFragment : Fragment() {
 
     private fun initializeUI(view: View) {
         binding.museumImageButton.setOnClickListener {
-            val action=MainFragmentDirections.actionMainFragmentToSearchFragment("museum")
+            val action=MainFragmentDirections.actionMainFragmentToSearchFragment("Müzeler")
             Navigation.findNavController(view).navigate(action)
         }
         binding.museumTextView.setOnClickListener {
-            val action=MainFragmentDirections.actionMainFragmentToSearchFragment("museum")
+            val action=MainFragmentDirections.actionMainFragmentToSearchFragment("Müzeler")
             Navigation.findNavController(view).navigate(action)
         }
         binding.forestImageButton.setOnClickListener {
-            val action=MainFragmentDirections.actionMainFragmentToSearchFragment("historical")
+            val action=MainFragmentDirections.actionMainFragmentToSearchFragment("Tarihi Alanlar")
             Navigation.findNavController(view).navigate(action)
         }
         binding.forestTextView.setOnClickListener {
-            val action=MainFragmentDirections.actionMainFragmentToSearchFragment("historical")
+            val action=MainFragmentDirections.actionMainFragmentToSearchFragment("Tarihi Alanlar")
             Navigation.findNavController(view).navigate(action)
         }
         binding.campingImageButton.setOnClickListener {
-            val action=MainFragmentDirections.actionMainFragmentToSearchFragment("natural")
+            val action=MainFragmentDirections.actionMainFragmentToSearchFragment("Doğal Alanlar")
             Navigation.findNavController(view).navigate(action)
         }
         binding.campingTextView.setOnClickListener {
-            val action=MainFragmentDirections.actionMainFragmentToSearchFragment("natural")
+            val action=MainFragmentDirections.actionMainFragmentToSearchFragment("Doğal Alanlar")
             Navigation.findNavController(view).navigate(action)
         }
         binding.beachImageButton.setOnClickListener {
-            val action=MainFragmentDirections.actionMainFragmentToSearchFragment("beach")
+            val action=MainFragmentDirections.actionMainFragmentToSearchFragment("Sahil ve Kumsallar")
             Navigation.findNavController(view).navigate(action)
         }
         binding.beachTextView.setOnClickListener {
-            val action=MainFragmentDirections.actionMainFragmentToSearchFragment("beach")
+            val action=MainFragmentDirections.actionMainFragmentToSearchFragment("Sahil ve Kumsallar")
             Navigation.findNavController(view).navigate(action)
         }
     }

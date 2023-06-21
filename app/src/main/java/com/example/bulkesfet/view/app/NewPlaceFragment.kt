@@ -114,6 +114,12 @@ class NewPlaceFragment : Fragment() {
                 }
             }
         }
+        binding.closeFragment.setOnClickListener {
+            activity?.onBackPressed()
+        }
+        binding.closeOneFragment.setOnClickListener {
+            activity?.onBackPressed()
+        }
     }
 
     private fun loadImage() {

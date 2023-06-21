@@ -147,6 +147,12 @@ class ProfileFragment : Fragment() {
                 //Picasso.get().load(it.imageURL).into(binding.userImagePP)
             }
         })
+        viewModel.adminLogin.observe(viewLifecycleOwner, Observer { admin->
+            if (admin){
+                val action=ProfileFragmentDirections.actionProfileFragmentToAdminMainFragment()
+                Navigation.findNavController(binding.root).navigate(action)
+            }
+        })
         viewModel.commentCount.observe(viewLifecycleOwner, Observer { value ->
             value?.let {
                 val string = "($it)"
@@ -158,7 +164,6 @@ class ProfileFragment : Fragment() {
                     binding.commentDateText.visibility = View.GONE
                     binding.rateTextView.visibility=View.GONE
                     binding.deleteIMG.visibility = View.GONE
-                    binding.changeIMG.visibility = View.GONE
                     binding.placeRateText.visibility = View.GONE
                     binding.starLayout.visibility = View.GONE
                     binding.userComment.visibility = View.GONE
@@ -169,7 +174,6 @@ class ProfileFragment : Fragment() {
                     binding.placeNameText.visibility = View.VISIBLE
                     binding.commentDateText.visibility = View.VISIBLE
                     binding.deleteIMG.visibility = View.VISIBLE
-                    binding.changeIMG.visibility = View.VISIBLE
                     binding.placeRateText.visibility = View.VISIBLE
                     binding.starLayout.visibility = View.VISIBLE
                     binding.userComment.visibility = View.VISIBLE

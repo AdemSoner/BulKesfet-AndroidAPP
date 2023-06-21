@@ -77,35 +77,25 @@
             app:layout_constraintBottom_toBottomOf="parent" />
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/changeIMG"
-            android:layout_width="28dp"
-            android:layout_height="28dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="20dp"
-            android:src="@drawable/ic_update"
-            app:civ_border_width="0dp"
-            app:civ_border_color="#FF000000"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/deleteIMG"
             android:layout_width="28dp"
             android:layout_height="28dp"
             android:layout_marginTop="5dp"
+            android:layout_marginEnd="20dp"
             android:src="@drawable/ic_delete"
             app:civ_border_width="0dp"
             app:civ_border_color="#FF000000"
-            app:layout_constraintStart_toStartOf="@id/changeIMG"
-            app:layout_constraintTop_toBottomOf="@id/changeIMG"
-            app:layout_constraintEnd_toEndOf="@id/changeIMG" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
 
         <androidx.constraintlayout.widget.Group
             android:id="@+id/userImagesGroup"
             android:visibility="visible"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:constraint_referenced_ids="changeIMG,deleteIMG" />
+            app:constraint_referenced_ids="deleteIMG" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -201,5 +201,115 @@
     <string name="requestPlace">Ekleme isteği gönder</string>
     <string name="requestPlaceSuccess">Ekleme isteği başarıyla gönderildi.</string>
 
+    <string name="category">Kategoriye göre ara</string>
+    <string name="city">Şehir ismine göre ara</string>
+    <string name="filtreOptions">Filtre Seçenekleri</string>
+
+    <string-array name="spinnerCategory">
+        <item>Tümü</item>
+        <item>Tarihi Alanlar</item>
+        <item>Doğal Alanlar</item>
+        <item>Sahil ve Kumsallar</item>
+        <item>Müzeler</item>
+    </string-array>
+    <string-array name="spinnerCity">
+        <item>Hepsi</item>
+        <item>Adana</item>
+        <item>Adıyaman</item>
+        <item>Afyonkarahisar</item>
+        <item>Ağrı</item>
+        <item>Aksaray</item>
+        <item>Amasya</item>
+        <item>Ankara</item>
+        <item>Antalya</item>
+        <item>Ardahan</item>
+        <item>Artvin</item>
+        <item>Aydın</item>
+        <item>Balıkesir</item>
+        <item>Bartın</item>
+        <item>Batman</item>
+        <item>Bayburt</item>
+        <item>Bilecik</item>
+        <item>Bingöl</item>
+        <item>Bitlis</item>
+        <item>Bolu</item>
+        <item>Burdur</item>
+        <item>Bursa</item>
+        <item>Çanakkale</item>
+        <item>Çankırı</item>
+        <item>Çorum</item>
+        <item>Denizli</item>
+        <item>Diyarbakır</item>
+        <item>Düzce</item>
+        <item>Edirne</item>
+        <item>Elazığ</item>
+        <item>Erzincan</item>
+        <item>Erzurum</item>
+        <item>Eskişehir</item>
+        <item>Gaziantep</item>
+        <item>Giresun</item>
+        <item>Gümüşhane</item>
+        <item>Hakkâri</item>
+        <item>Hatay</item>
+        <item>Iğdır</item>
+        <item>Isparta</item>
+        <item>İstanbul</item>
+        <item>İzmir</item>
+        <item>Kahramanmaraş</item>
+        <item>Karabük</item>
+        <item>Karaman</item>
+        <item>Kars</item>
+        <item>Kastamonu</item>
+        <item>Kayseri</item>
+        <item>Kırıkkale</item>
+        <item>Kırklareli</item>
+        <item>Kırşehir</item>
+        <item>Kilis</item>
+        <item>Kocaeli</item>
+        <item>Konya</item>
+        <item>Kütahya</item>
+        <item>Malatya</item>
+        <item>Manisa</item>
+        <item>Mardin</item>
+        <item>Mersin</item>
+        <item>Muğla</item>
+        <item>Muş</item>
+        <item>Nevşehir</item>
+        <item>Niğde</item>
+        <item>Ordu</item>
+        <item>Osmaniye</item>
+        <item>Rize</item>
+        <item>Sakarya</item>
+        <item>Samsun</item>
+        <item>Siirt</item>
+        <item>Sinop</item>
+        <item>Sivas</item>
+        <item>Şanlıurfa</item>
+        <item>Şırnak</item>
+        <item>Tekirdağ</item>
+        <item>Tokat</item>
+        <item>Trabzon</item>
+        <item>Tunceli</item>
+        <item>Uşak</item>
+        <item>Van</item>
+        <item>Yalova</item>
+        <item>Yozgat</item>
+        <item>Zonguldak</item>
+    </string-array>
+
+    <string name="adminPanelText">Admin Paneli</string>
+    <string name="placeRequestsAdminText">Mekan İstekleri</string>
+    <string name="noPlaceRequestsAdminText">İstek Bulunamadı</string>
+    <string name="accept">Onayla</string>
+    <string name="success">İşlem başarılı</string>
+    <string name="secondScreenOnBoardText">Keşfettiğiniz yeri kullanıcı girişi yaparak <font color='#292C3D'><br>kayıt altında</br></font> tutun!</string>
+    <string name="thirdScreenOnBoardOneText">Düşünceleriniz aklınızda değil <font color='#ff4760'><br>Bul Keşfet\'te</br></font> kalsın!</string>
+    <string name="thirdScreenOnBoardTwoText">Yorum yapma özelliğimiz sayesinde düşüncelerinizi özgürce paylaşabilirsiniz</string>
+    <string name="fourthScreenOnBoardOneText">Güzel anılar yaşadığınız\nbir yer mi var?</string>
+    <string name="fourthScreenOnBoardTwoText">Bul Keşfet bunu keşfetsin!\nProfilinizde bunu bizimle paylaşabilirsiniz.</string>
+    <string name="fifthScreenOnBoardOneText">Kayıt olmasanızda uygulamamızda serbestçe dolaşabilirsiniz!</string>
+    <string name="fifthScreenOnBoardTwoText">Kayıt olmak için vakit öldürmeye gerek yok!\nGezmek <font color='#ff4760'><br>Bul keşfet</br></font> ile çok kolay!</string>
+
+
 
 </resources>

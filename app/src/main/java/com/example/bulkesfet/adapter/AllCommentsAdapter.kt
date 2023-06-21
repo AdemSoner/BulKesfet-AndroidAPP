@@ -2,41 +2,43 @@ package com.example.bulkesfet.adapter
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bulkesfet.R
-import com.example.bulkesfet.databinding.OneplacelayoutBinding
-import com.example.bulkesfet.databinding.OneusercommentlayoutBinding
+import com.example.bulkesfet.databinding.AdmincommentlayoutBinding
 import com.example.bulkesfet.model.Comments
 import com.example.bulkesfet.utils.getImage
 import com.example.bulkesfet.utils.progressDrawable
-import com.example.bulkesfet.view.app.FavoritesFragment
-import com.example.bulkesfet.view.app.UserCommentsFragment
+import com.example.bulkesfet.view.admin.AllCommentsFragment
 import com.google.firebase.database.FirebaseDatabase
 
-class UserCommentAdapter (mFragment:Fragment,private val commentList: ArrayList<Comments>) :
-    RecyclerView.Adapter<UserCommentAdapter.UserCommentViewHolder>(){
+
+class AllCommentsAdapter(mFragment: Fragment,
+                         private val commentList: ArrayList<Comments>
+) : RecyclerView.Adapter<AllCommentsAdapter.CommentsViewHolder>() {
     private val myFragment=mFragment
-    inner class UserCommentViewHolder(val binding: OneusercommentlayoutBinding) : RecyclerView.ViewHolder(binding.root) {
+
+    inner class CommentsViewHolder(val binding: AdmincommentlayoutBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         private val placeName= binding.placeNameText
+        private val userName= binding.userNameText
         private val placeImage= binding.placeImg
         private val userRate=binding.placeRateText
         private val comment= binding.placeDescription
         private val date= binding.commentDateText
-        fun setData(commentDetail:Comments){
-            placeName.text=commentDetail.placeName
-            placeImage.getImage(commentDetail.placeImage, progressDrawable(binding.root.context))
-            userRate.text=commentDetail.rate.toString()
-            setStars(commentDetail.rate)
-            comment.text=commentDetail.comment
-            val string="${commentDetail.date.day}/${commentDetail.date.month}/${commentDetail.date.year}"
-            date.text=string
-        }
 
+            fun setData(commentDetail:Comments,position: Int){
+                placeName.text=commentDetail.placeName
+                userName.text=commentDetail.userName
+                placeImage.getImage(commentDetail.placeImage, progressDrawable(binding.root.context))
+                userRate.text=commentDetail.rate.toString()
+                setStars(commentDetail.rate)
+                comment.text=commentDetail.comment
+                val string="${commentDetail.date.day}/${commentDetail.date.month}/${commentDetail.date.year}"
+                date.text=string
+            }
         private fun setStars(rate: Int) {
             val starList= arrayListOf(binding.starOne,binding.starTwo,binding.starThree,binding.starFour,binding.starFive)
             for (a in rate until 5){
@@ -48,14 +50,18 @@ class UserCommentAdapter (mFragment:Fragment,private val commentList: ArrayList<
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserCommentAdapter.UserCommentViewHolder {
-        val binding = OneusercommentlayoutBinding.inflate(LayoutInflater.from(parent.context),parent,false)
-        return UserCommentViewHolder(binding)
+
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): AllCommentsAdapter.CommentsViewHolder {
+        val binding= AdmincommentlayoutBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        return CommentsViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: UserCommentAdapter.UserCommentViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: AllCommentsAdapter.CommentsViewHolder, position: Int) {
         val createCommentNow = commentList[position]
-        holder.setData(createCommentNow)
+        holder.setData(createCommentNow,position)
         holder.binding.deleteIMG.setOnClickListener {
             val alert= AlertDialog.Builder(holder.binding.root.context)
             alert.setTitle(R.string.areYouSureToDelete)
@@ -76,7 +82,7 @@ class UserCommentAdapter (mFragment:Fragment,private val commentList: ArrayList<
                             if (commentID!="null")
                                 FirebaseDatabase.getInstance().reference.child("Comments").child(commentID).removeValue()
                             commentList.removeAt(position)
-                            (myFragment as UserCommentsFragment).recyclerOlustur(commentList)
+                            (myFragment as AllCommentsFragment).recyclerOlustur(commentList)
                         }
                 }
                 .setNeutralButton(R.string.decline) { dialog, _ ->
@@ -87,7 +93,7 @@ class UserCommentAdapter (mFragment:Fragment,private val commentList: ArrayList<
     }
 
     override fun getItemCount(): Int {
-        return commentList.size
+       return commentList.size
     }
 
     @SuppressLint("NotifyDataSetChanged")
