@@ -7,5 +7,7 @@ import retrofit2.http.GET
 interface PlaceAPI {
     @GET("bulkesfet/place2")
     fun getPlaceDetails(): Call<List<PlaceModel>>
+
+    //TODO Api ulaşılmadığında uygulama kapanıyor buna çözüm bulammız gerk
 }
 

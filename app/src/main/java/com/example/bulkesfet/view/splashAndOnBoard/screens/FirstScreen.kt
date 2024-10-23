@@ -24,15 +24,6 @@ class FirstScreen : Fragment() {
         binding.btnNext.setOnClickListener {
             viewPagerFrag?.currentItem = 1
         }
-        binding.skip.setOnClickListener {
-            val sharedPref =
-                requireActivity().getSharedPreferences("onBoarding", Context.MODE_PRIVATE)
-            val editor = sharedPref.edit()
-            editor.putBoolean("Finished", true)
-            editor.apply()
-            findNavController().navigate(R.id.action_onBoardingFragment_to_mainFragment)
-        }
-
         return binding.root
     }
 
