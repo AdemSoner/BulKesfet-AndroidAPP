@@ -33,7 +33,7 @@ Henüz halka açık olarak Yayınlanmamıştır.
 Our application provides information on places to visit in all 81 provinces of Turkey, offered by users. 
 It allows users to browse and review detailed options by selecting their desired country or type (Natural Areas, Historical Sites, etc.)
 
-## Geliştirilme Süreci
+## Development Process
 - Coding Language: Kotlin <br />
 - Architectural Pattern: MVVM & Android Jetpack <br />
 - Database : Firebase Realtime Database <br />
